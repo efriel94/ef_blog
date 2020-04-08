@@ -36,7 +36,7 @@ Nmap done: 1 IP address (1 host up) scanned in 128.40 seconds
 - -p- : scanning all 65536 ports
 - -oN: Output result to a normal text file called nmap.nmap
 
-| ![image](/assets/img/htb/optimum/hfs_opt.png) |
+| ![image]({{site.baseurl}}/assets/img/htb/optimum/hfs_opt.png) |
 | :--: |
 | *HFS Webpage running on port 80* |
 
