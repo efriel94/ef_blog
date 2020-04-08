@@ -10,7 +10,7 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 <ul>
   {% for news in site.categories.HackTheBox %}
   <li>
-    <a href="{{baseurl}}/{{news.url}}">{{news.title}}</a>
+    <a href="{{ baseurl }}/{{ news.url }}">{{news.title}}</a>
     <p>{{news.meta}}</p>
   </li>
   {% endfor %}
