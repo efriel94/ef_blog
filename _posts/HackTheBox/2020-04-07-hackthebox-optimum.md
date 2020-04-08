@@ -75,7 +75,7 @@ Once I edited the script, I setup my netcat listener, python webserver and then 
 Note that it may take a few attempts for the script to work. 
 
 
-| ![image](/assets/img/htb/optimum/opt_terminal.png) |
+| ![image]({{site.baseurl}}/assets/img/htb/optimum/opt_terminal.png) |
 | :--: |
 | *Running the attack and having a reverse shell access to the victim machine* |
 
