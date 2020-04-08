@@ -74,9 +74,7 @@ ip_addr = "192.168.44.128" #local IP address
 Once I edited the script, I setup my netcat listener, python webserver and then executed the script: ```python 39161.py <target IP> <target port>``` 
 Note that it may take a few attempts for the script to work. 
 
-![image]({{site.baseurl}}/assets/img/htb/optimum/opt_terminal.png)
-
-| ![image]({{site.baseurl}}/assets/img/htb/optimum/opt_terminal.png) |
+| ![image]({{site.baseurl}}/assets/img/htb/optimum/hfs_opt.png) |
 | :--: |
 | *Running the attack and having a reverse shell access to the victim machine* |
 
