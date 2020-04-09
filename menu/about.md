@@ -18,4 +18,4 @@ I run the [Ethical Hacking & InfoSec group](https://blogs.qub.ac.uk/team47/about
 - Security challenges & CTFs. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w) which shows all the websites/platforms I use. 
 - Embedded Linux/Embedded Systems
 - Network Architecture and Security
-- Contribute to the <a href="https://stats.foldingathome.org/donor/73291172" target="_blank">Folding@home</a> project. A distributed computing project where you donate some computing resource to researchers for the advancement of medical research and the development of new vaccines, most particulary COVID-19.
+- Contribute to the <a href="https://stats.foldingathome.org/donor/73291172" target="_blank">Folding@home</a> project. A project where you donate some computing resources for the advancement of medical research and the development of new vaccines, most particulary COVID-19. <a href="{{ site.github.url}}/assets/foldingathome.png" >Here's what a COVID-19 simulation looks like.</a>
