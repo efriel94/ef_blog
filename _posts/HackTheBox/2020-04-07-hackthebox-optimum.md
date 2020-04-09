@@ -36,7 +36,7 @@ Nmap done: 1 IP address (1 host up) scanned in 128.40 seconds
 - -p- : scanning all 65536 ports
 - -oN: Output result to a normal text file called nmap.nmap
 
-| ![image]({{site.baseurl}}/assets/img/htb/optimum/hfs_opt.png) |
+| ![image]({{site.github.url}}/assets/img/htb/optimum/hfs_opt.png) |
 | :--: |
 | *HFS Webpage running on port 80* |
 
@@ -74,7 +74,7 @@ ip_addr = "192.168.44.128" #local IP address
 Once I edited the script, I setup my netcat listener, python webserver and then executed the script: ```python 39161.py <target IP> <target port>``` 
 Note that it may take a few attempts for the script to work. 
 
-| ![image]({{site.baseurl}}/assets/img/htb/optimum/opt_terminal.png) |
+| ![image]({{site.github.url}}/assets/img/htb/optimum/opt_terminal.png) |
 | :--: |
 | *Running the attack and having a reverse shell access to the victim machine* |
 
