@@ -8,9 +8,9 @@ title: Content
 
 All walkthroughs are OSCP format i.e no use of the metasploit framework, the exception being msfvenom, or automated exploitation tools.
 <ul>
-  {% for news in site.categories.HackTheBox %}
+  {% for post in site.categories.HackTheBox %}
   <li>
-    <a href="{{ news.url }}">{{news.title}}</a>
+    <a href="{{ site.github.url }}{{ post.url }}">{{ post.title }}</a>
     <p>{{news.meta}}</p>
   </li>
   {% endfor %}
