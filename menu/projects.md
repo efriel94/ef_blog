@@ -19,7 +19,7 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 
 ### Cheatsheets
 <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
-<a href="https://www.markdownguide.org/basic-syntax/"" target="_blank_">Markdown Syntax</a>
+<a href="https://www.markdownguide.org/basic-syntax/" target="_blank_">Markdown Syntax</a>
 
 <!-- original code
 <ul class="posts">
