@@ -9,7 +9,7 @@ C:\WINDOWS\system32 > whoami
 
 I am a Software Engineer working at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/). Working in Cyber Security I get exposure to alot of different tools and technologies so this wiki is where I'll keep various documents and tutorials for personal reference. 
 
-I run the [Ethical Hacking & InfoSec group](https://blogs.qub.ac.uk/team47/about/) at CSIT where likeminded individuals who are interested in computer security, meetup and play on various cyber security platforms. 
+I run the Ethical Hacking & InfoSec group with other members at CSIT where likeminded individuals who are interested in computer security, meetup and play on various cyber security platforms. [View group activity](https://blogs.qub.ac.uk/team47/about/)
 
 ### Certifications
 - CEH (2019) 
