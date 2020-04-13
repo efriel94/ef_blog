@@ -21,6 +21,7 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
 - <a href="https://redteamtutorials.com/2018/10/24/msfvenom-cheatsheet/">MSFVenom</a>
 - <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md">Windows Privelege Escalation</a>
+- <a href="https://www.blackhillsinfosec.com/password-spraying-other-fun-with-rpcclient/">Password spraying with RPCClient & SMBClient</a>
 - <a href="https://devhints.io/curl">CURL</a>
 - <a href="https://www.markdownguide.org/basic-syntax/" target="_blank_">Markdown Syntax</a>
 
