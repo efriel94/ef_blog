@@ -17,6 +17,19 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 </ul>
 <br>
 
+### Embedded Linux
+
+A series on building a embedded linux distro from scratch on a RPi 3B.
+<ul>
+  {% for post in site.categories.rpi-embedded %}
+  <li>
+    <a href="{{ site.github.url }}{{ post.url }}">{{ post.title }}</a>
+    <p>{{news.meta}}</p>
+  </li>
+  {% endfor %}
+</ul>
+<br>
+
 ### Cheatsheets
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
 - <a href="https://redteamtutorials.com/2018/10/24/msfvenom-cheatsheet/">MSFVenom</a>
