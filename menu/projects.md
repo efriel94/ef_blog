@@ -19,9 +19,9 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 
 ### Embedded Linux
 
-A series on building a embedded linux distro from scratch on a RPi 3B.
+A series on building a embedded Linux distro from scratch on a RPi 3B.
 <ul>
-  {% for post in site.categories.rpiembedded %}
+  {% for post in site.categories.rpiembedded reversed %}
   <li>
     <a href="{{ site.github.url }}{{ post.url }}">{{ post.title }}</a>
     <p>{{news.meta}}</p>
