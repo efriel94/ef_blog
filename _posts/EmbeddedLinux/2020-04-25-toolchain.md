@@ -3,7 +3,7 @@ layout: post
 title: "Building a toolchain with crosstool-NG"
 author: "Emmet Friel"
 categories: rpiembedded
-image: rpi-linux/toolchain.png
+image: rpi-linux/toolchain.jpg
 ---
 
 <br>
@@ -36,13 +36,15 @@ Notes on the commands:
 
 ## Selecting the toolchain
 The toolchain is hardware specific, built to the specifications of the target CPU and referring to the book this includes:
-> - **CPU Architecture**: In the case of the RPi 3B it has a Quad core A53 processor and that is based on the Arm V8 64 bit instruction set.
-> - **Endian operation**: The order of bytes within a binary representation. Big endian operation places the MSF byte first and small endian is the opposite (assuming “first is on the left). In this case, Rpi 3B spec outlines it supports both operations. 
-> - **Floating point**: For the RPi 3B, it has floating point hardware coprocessor.
-> - **Application Binary Interface (ABI)**: The set of rules that mandate how executables are built (data type and size, stack alignment, language-specific constructs, etc.) and behave (calling convention, system call number and invocation mechanisms, etc.)
+ - **CPU Architecture**: In the case of the RPi 3B it has a Quad core A53 processor and that is based on the Arm V8 64 bit instruction set.
+ - **Endian operation**: The order of bytes within a binary representation. Big endian operation places the MSF byte first and small endian is the opposite (assuming “first is on the left). In this case, Rpi 3B spec outlines it supports both operations. 
+ - **Floating point**: For the RPi 3B, it has floating point hardware coprocessor.
+ - **Application Binary Interface (ABI)**: The set of rules that mandate how executables are built (data type and size, stack alignment, language-specific constructs, etc.) and behave (calling convention, system call number and invocation mechanisms, etc.)
+
+You can list all the toolchain samples for different architectures using ./ct-ng:
 
 ```bash
-emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng help
+emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng help #LISTS ALL THE OPTIONS
 emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng list-samples
 Status  Sample name
 [L...]   aarch64-rpi3-linux-gnu
@@ -83,7 +85,7 @@ Status  Sample name
  O (OBSOLETE)    : sample needs to be upgraded
 ```
 
-This lists all the various toolchains and you can see there are different combinations of the same toolchain. The one that I selected is aarch64-rpi3-linux-gnu and I will show how to perform a sanity check to make sure this is the correct compiler. Next step is to select that toolchain, configure it and build.
+This list highlights all the various toolchains and you can see there are different combinations of the same toolchain. The one that I selected is aarch64-rpi3-linux-gnu and I will show how to perform a sanity check to make sure this is the correct compiler. Next step is to select that toolchain, configure it and build.
 
 ```bash
 emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng aarch64-rpi3-linux-gnu #SELECT
@@ -92,8 +94,8 @@ emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng menuconfig #CONF
 
 Few modifications I did was:
 **In Paths and misc options**
-- (${HOME}/x-tools/${CT_TARGET}) Prefix directory
-- (4) Number of parallel jobs (twice the number of cores on my machine)
+- ```(${HOME}/x-tools/${CT_TARGET}) #Prefix directory```
+- ```(4) Number of parallel jobs #twice the number of cores on my machine```
 
 The build time will depend on your host specs but it took my Ubuntu 18 VM with 4GB RAM and 2 cores to build it in 40 minutes. Once the build is complete, you will have your sparkling new toolchain in the prefix directory you set.
 
@@ -124,7 +126,7 @@ int main() {
    return 0;
 }
 
-emmet@homepc:/home/emmet$ aarch64-rpi3-linux-gnu-gcc -static hello.c -o hello-static
+emmet@homepc:/home/emmet$ aarch64-rpi3-linux-gnu-gcc -static hello.c -o hello-static #Statically linking the program rather than dynamically
 emmet@homepc:/home/emmet$ scp hello-static ubuntu@10.10.10.21:/home/ubuntu
 ubuntu@ubuntu-embedded:~$ ./hello-static 
 Hello, world!
