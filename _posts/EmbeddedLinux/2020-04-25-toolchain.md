@@ -97,6 +97,9 @@ Few modifications I did was:
 - ```(${HOME}/x-tools/${CT_TARGET}) #Prefix directory```
 - ```(4) Number of parallel jobs #twice the number of cores on my machine```
 
+```bash
+emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng build #BUILD
+```
 The build time will depend on your host specs but it took my Ubuntu 18 VM with 4GB RAM and 2 cores to build it in 40 minutes. Once the build is complete, you will have your sparkling new toolchain in the prefix directory you set.
 
 ```bash
