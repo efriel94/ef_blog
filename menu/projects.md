@@ -6,7 +6,7 @@ title: Content
 
 ### HackTheBox
 
-All walkthroughs are OSCP format i.e no use of the metasploit framework, the exception being msfvenom, or automated exploitation tools.
+All walkthroughs are OSCP format.
 <ul>
   {% for post in site.categories.HackTheBox %}
   <li>
@@ -17,9 +17,9 @@ All walkthroughs are OSCP format i.e no use of the metasploit framework, the exc
 </ul>
 <br>
 
+<!--
 ### Embedded Linux
 
-A series on building a embedded Linux distro from scratch on a RPi 3B.
 <ul>
   {% for post in site.categories.rpiembedded reversed %}
   <li>
@@ -29,6 +29,7 @@ A series on building a embedded Linux distro from scratch on a RPi 3B.
   {% endfor %}
 </ul>
 <br>
+-->
 
 ### Cheatsheets
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
