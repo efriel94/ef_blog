@@ -7,7 +7,7 @@ title: "About"
 C:\WINDOWS\system32 > whoami
 ```
 
-I am a Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security, specifically embedded systems and red/blue team operations. This page is as a personal wiki for various tutorials and documents.  
+I am a Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security, specifically embedded systems and red/blue team operations. This page is a personal wiki for various tutorials and documents.  
 
 I run the Ethical Hacking & InfoSec group with other members at CSIT where likeminded individuals who are interested in computer security, meetup and play on various cyber security platforms. [View group activity](https://blogs.qub.ac.uk/team47/about/)
 
