@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Building an Embedded Linux Distro on a Beaglebone Black ARM Cortex-A8"
+title: "Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8"
 author: "Emmet Friel"
 categories: embedded
-image: embedded/bb-linux/Embedded-Linux.png
+image: embedded/bb-linux/linux.jpg
 ---
 
 # Introduction
@@ -21,10 +21,8 @@ This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebo
 
 4. Root filesystem
 - The final element which provides the kernel with the required libraries and program that will be run after kernel initialization. The kernel will either mount the root filesystem in RAM, known as an initial RAM filesystem (initramfs), from the bootloader or it will mount it from a block device such as an SD card or it can be mounted over the network (NFS – Network Filesystem).
-
-<br />
-<br />
-
+<br>
+<br>
 
 # 1. Toolchain: crosstool-NG
 
@@ -171,8 +169,8 @@ Copyright (C) 2018 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-<br />
-<br />
+<br>
+<br>
 
 
 # 2. Bootloader: U-Boot
@@ -272,8 +270,8 @@ Address in environment is  0c:ae:7d:0c:4f:f4
 Hit any key to stop autoboot:  0 
 emmets_uboot=>  
 ```
-<br />
-<br />
+<br>
+<br>
 
 # 3. Linux Kernel
 
@@ -376,8 +374,8 @@ Insert SD card back into the beaglebone and test the kernel:
 
 The kernel should hang or panic which is expected as there is no root filesystem on the SD card. The root filesystem will now be built using Buildroot.
 
-<br />
-<br />
+<br>
+<br>
 
 # 4. Root Filesystem: Buildroot
 
@@ -431,8 +429,8 @@ Device     Boot   Start      End  Sectors  Size Id Type
 
 emmet@homepc:/home/emmet/Documents/buildroot$ sudo dd if=output/images/rootfs.ext4 of=/dev/sdb2
 ```
-<br />
-<br />
+<br>
+<br>
 
 # Booting up the custom Linux OS
 
