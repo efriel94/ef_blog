@@ -17,11 +17,11 @@ All walkthroughs are OSCP format.
 </ul>
 <br>
 
-<!--
+
 ### Embedded Linux
 
 <ul>
-  {% for post in site.categories.rpiembedded reversed %}
+  {% for post in site.categories.embedded reversed %}
   <li>
     <a href="{{ site.github.url }}{{ post.url }}">{{ post.title }}</a>
     <p>{{news.meta}}</p>
@@ -29,7 +29,7 @@ All walkthroughs are OSCP format.
   {% endfor %}
 </ul>
 <br>
--->
+
 
 ### Cheatsheets
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
