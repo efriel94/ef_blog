@@ -20,11 +20,7 @@ This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebo
 - The heart of the operating system. It is responsible for managing resources, interfacing with hardware and it provides an API that allows users to interact with the kernel space from the user space such as shell terminal for example. 
 
 4. Root filesystem
-- The final element which provides the kernel with the required libraries and program that will be run after kernel initialization. The kernel will either mount the root filesystem in RAM, known as an initial RAM filesystem (initramfs), from the bootloader or it will mount it from a block device such as an SD card or it can be mounted over the network (NFS – Network Filesystem). \
-
-
-
-
+- The final element which provides the kernel with the required libraries and program that will be run after kernel initialization. The kernel will either mount the root filesystem in RAM, known as an initial RAM filesystem (initramfs), from the bootloader or it will mount it from a block device such as an SD card or it can be mounted over the network (NFS – Network Filesystem).<br/><br/><br/>
 
 
 # 1. Toolchain: crosstool-NG
@@ -156,7 +152,7 @@ emmet@homepc:/home/emmet/Documents/crosstool-ng$ ./ct-ng show-arm-cortex_a8-linu
     Companion tools :
 ```
 
-Now your can build the toolchain. The build time will depend on your host specs but it took my Ubuntu 18 VM with 4GB RAM and 2 cores to build it in 40 minutes. Once the build is complete, you will have your sparkling new toolchain in the prefix directory you set.
+Now the toolchain can be built. The build time will depend on your host specs but it took my Ubuntu 18 VM with 4GB RAM and 2 cores to build it in 40 minutes. Once the build is complete, you will have your sparkling new toolchain in the prefix directory you set.
 
 ```bash
 emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng build
@@ -172,30 +168,26 @@ Copyright (C) 2018 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-
-
-
-
+<br/><br/><br/>
 
 # 2. Bootloader: U-Boot
 
-Das Universal Bootloader (shortened to U-Boot) is an open source bootloader primarily for embedded devices to define the firmware instructions on how to boot the device's operating system hat supports a wide range of architectures. 
+Das Universal Bootloader (shortened to U-Boot) is an open source bootloader primarily used for embedded devices to define the firmware instructions on how to boot the device's operating system as well as supporting a wide range of architectures. 
 
 ## Prerequisites 
 
-- Using a USB to TTY converter cable to communicate with the board and for debugging. 
+- Using a USB to TTY converter cable to communicate with the board via serial port and for debugging. 
 - Check if you have the drivers installed, if not then just do a quick search online of these dependencies and install: 
-		- modinfo usbserial
-		- modinfo cp210x
+	- modinfo usbserial
+	- modinfo cp210x
 - Connect pins to the serial debug on the beaglebone board:
-		- USB Tx (Green)→ BB Rx
-		- USB Rx (Blue) → BB Tx
-		- USB GND (Yellow)→ BB GND
+	- USB Tx (Green)→ BB Rx
+	- USB Rx (Blue) → BB Tx
+	- USB GND (Yellow)→ BB GND
 
 ![image]({{site.github.url}}/assets/img/embedded/bb-linux/tty-serial.png)
 
-- Power on board
-- Connect the USB device filter to the virtual machine
+- Power on the board and add the USB device filter to the virtual machine using the "+" symbol.
 
 ![image]({{site.github.url}}/assets/img/embedded/bb-linux/vbox-usb.png)
 
@@ -211,7 +203,7 @@ emmet@homepc:/home/emmet/Documents/u-boot$ git checkout v2020.04
 emmet@homepc:/home/emmet/Documents/uboot$ git checkout -b u-boot-bb
 ```
 
-Now choose the U-boot configuration based on the Beaglebone Black's processor i.e.AM335X Arm Cortex A8 and then you will be able to customise the configuration from the menu driven window. Lots of config files for various boards can be found in the /configs directory. 
+U-boot configuration is based on the Beaglebone Black's processor i.e.AM335X Arm Cortex A8. Lots of configuration files for various boards can be found in the /configs directory. 
 
 ```bash
 emmet@homepc:/home/emmet/Documents/u-boot$ make CROSS_COMPILE=arm-cortex_a8-linux-gnueabihf- am335x_evm_defconfig
@@ -233,16 +225,15 @@ SPL / TPL  ---> [ ] Activate Falcon Mode
 emmet@homepc:/home/emmet/Documents/u-boot$ make CROSS_COMPILE=arm-cortex_a8-linux-gnueabihf-
 ```
 
-Once the build finishes, it will generate your secondary program loader (SPL) which is MLO and the third program loader (TPL) files being the U-boot files. SPL is required to be loaded into SRAM from either flash memory, SD card or eMMC as its used as an intermediate stager to initialize main DRAM memory and then load U-Boot since SRAM can’t run a full bootloader due to memory constraints. We will be loading MLO and U-Boot from a 8GB SD card so its necessary to partition the SD card into two sections. Partition one which will hold our boot files while partition two will hold the root filesystem. I used a tool known as GParted for partitioning.
+Once the build finishes, it will generate your secondary program loader (SPL) being the MLO file and the third program loader (TPL) files being the U-boot files. SPL is required to be loaded into SRAM from either flash memory, SD card or eMMC as its used as an intermediate stager to initialize main DRAM memory and then load U-Boot since SRAM can’t run a full bootloader due to memory constraints. We will be loading MLO and U-Boot from a 8GB SD card so its necessary to partition the SD card into two sections. Partition one which will hold our boot files while partition two will hold the root filesystem. I used a tool known as GParted for partitioning.
 
 |             | Name   | Size | Format | Flags     |
 |-------------|--------|------|--------|-----------|
 | Partition 1 | boot   | 2GB  | FAT32  | boot, LBA |
 | Partition 2 | rootfs | 6GB  | ext4   |           |
-|             |        |      |        |           |
 
 
-Copy SPL and TPL files onto boot partition, unmount device and insert SD card into board. Hold down the boot button before powering on the board otherwise the Beaglebone will boot from onboard eMMC storage. 
+Copy SPL and TPL files onto the boot partition, unmount device and insert SD card into board. Hold down the boot button before powering on the board otherwise the Beaglebone will boot from onboard eMMC storage. 
 
 ```bash
 emmet@homepc:/home/emmet/Documents/u-boot$ cp MLO u-boot.img /media/emmet/BOOT
@@ -274,11 +265,7 @@ Address in environment is  0c:ae:7d:0c:4f:f4
 Hit any key to stop autoboot:  0 
 emmets_uboot=>  
 ```
-
-
-
-
-
+<br/><br/><br/>
 
 # 3. Linux Kernel
 
@@ -303,7 +290,7 @@ emmet@homepc:/home/emmet/Documents/linux$ make distclean
 ```
 
 ## Configure and Build the kernel
-Select the ARM V7 kernel configuration and launch the menuconfig window. The different types of architectures that can be supplied can be seen in the arch/ directory. In the case of building the kernel the architecture (ARCH=) has to be expressed in addition to CROSS_COMPILE. 
+Select the ARM V7 kernel configuration file and launch the menuconfig window. The different types of architectures that can be supplied can be seen in the arch/ directory. In the case of building the kernel the architecture has to be expressed in addition to CROSS_COMPILE. 
 
 ```bash
 emmet@homepc:/home/emmet/Documents/linux$ make ARCH=arm CROSS_COMPILE=arm-cortex_a8-linux-gnueabihf- multi_v7_defconfig
@@ -338,19 +325,31 @@ emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot$ sync
 U-Boot supports using uEnv.txt which is a text file that declares and initializes boot variables before U-Boot runs bootcmd. Create a file uEnv.txt, insert the contents below and copy it onto the boot partition:
 
 >
->console=ttyS0,115200 \
->ethaddr=02:f8:7e:a6:fc:e1 \
->ipaddr=192.168.1.1 \
->serverip=192.168.1.10 \
->bootfile=zImage \
->fdtfile=am335x-boneblack.dtb \
->loadaddr=0x80007fc0 \
->fdtaddr=0x80F80000 \
->loadfdt=fatload mmc 0:1 ${fdtaddr} ${fdtfile} \
->loaduimage=fatload mmc 0:1 ${loadaddr} ${bootfile} \
->mmc_args=setenv bootargs console=${console} ${optargs} root=/dev/mmcblk0p2 rootfstype=ext4 \
->fdtboot=run mmc_args; bootz ${loadaddr} - ${fdtaddr} \
->uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot; \
+>console=ttyS0,115200 
+> 
+>ethaddr=02:f8:7e:a6:fc:e1
+>
+>ipaddr=192.168.1.1
+>
+>serverip=192.168.1.10
+>
+>bootfile=zImage
+>
+>fdtfile=am335x-boneblack.dtb
+>
+>loadaddr=0x80007fc0
+>
+>fdtaddr=0x80F80000
+>
+>loadfdt=fatload mmc 0:1 ${fdtaddr} ${fdtfile}
+>
+>loaduimage=fatload mmc 0:1 ${loadaddr} ${bootfile}
+>
+>mmc_args=setenv bootargs console=${console} ${optargs} root=/dev/mmcblk0p2 rootfstype=ext4
+>
+>fdtboot=run mmc_args; bootz ${loadaddr} - ${fdtaddr}
+>
+>uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot;
 >
 
 Insert SD card back into the beaglebone and test the kernel:
@@ -380,16 +379,12 @@ Insert SD card back into the beaglebone and test the kernel:
 ```
 
 The kernel should hang or panic which is expected as there is no root filesystem on the SD card. The root filesystem will now be built using Buildroot.
-
-
-
-
-
+<br/><br/><br/>
 
 
 # 4. Root Filesystem: Buildroot
 
-Buildroot is an embedded Linux build system that supports many processors and architectures able to generate a toolchain, root filesystem, Linux kernel and a bootloader. Since we have built our own toolchain, bootloader and kernel, Buildroot will be used to a create a minimal root filesystem including busybox and simple packages. 
+Buildroot is an embedded Linux build system that supports many processors and architectures with the ability to generate a toolchain, root filesystem, Linux kernel and a bootloader. Since we have built our own toolchain, bootloader and kernel, Buildroot will be used to a create a minimal root filesystem that will include busybox and simple packages. 
 
 ## Clone and Configure Buildroot
 ```bash
@@ -439,11 +434,7 @@ Device     Boot   Start      End  Sectors  Size Id Type
 
 emmet@homepc:/home/emmet/Documents/buildroot$ sudo dd if=output/images/rootfs.ext4 of=/dev/sdb2
 ```
-
-
-
-
-
+<br/><br/><br/>
 
 # Booting up the custom Linux OS
 
