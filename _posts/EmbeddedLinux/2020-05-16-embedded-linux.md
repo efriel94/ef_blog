@@ -8,7 +8,7 @@ image: embedded/bb-linux/linux.jpg
 
 # Introduction
 
-This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebone Black with a root filesystem that is less than 10MB which can be easily ported to other boards and IOT devices. The tutorial will consist of using crosstool-NG to build the toolchain, using Make to build the bootloader, kernel and device trees and lastly using Buildroot to compile the root filesystem. Building an embedded Linux distro requires four main elements:
+This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebone Black with a root filesystem that is less than 10MB which can be easily ported to other boards and IOT devices. The tutorial will consist of using crosstool-NG to build the toolchain, using Make to build the bootloader, kernel and device trees and lastly using Buildroot to compile the root filesystem. Starting off on embedded Linux I'd recommend getting the<a href="https://www.amazon.co.uk/Mastering-Embedded-Linux-Programming-potential/dp/1787283283" target="_blank"> Mastering Embedded Linux Programming book</a>which this tutorial takes pieces of inspiration from and takes you through an in-depth description of the entire project lifecycle. Building an embedded Linux distribution from scratch requires four main elements:
 
 1. Toolchain
 - A set of tools required to build and compile your source code that will be able to run on the target device. The tools include a compiler, a linker and various run-time libraries. I will be using a cross-compilation toolchain that will compile the code on my host machine (Ubuntu 18 VM) that then will run on the target (BeagleBone Black).
@@ -155,7 +155,7 @@ emmet@homepc:/home/emmet/Documents/crosstool-ng$ ./ct-ng show-arm-cortex_a8-linu
 Now the toolchain can be built. The build time will depend on your host specs but it took my Ubuntu 18 VM with 4GB RAM and 2 cores to build it in 40 minutes. Once the build is complete, you will have your sparkling new toolchain in the prefix directory you set.
 
 ```bash
-emmet@homepc:/home/emmet/Downloads/crosstool-ng-1.24.0$ ./ct-ng build
+emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0$ ./ct-ng build
 ```
 
 Add the toolchain to your PATH and test:
@@ -200,7 +200,7 @@ Das Universal Bootloader (shortened to U-Boot) is an open source bootloader prim
 emmet@homepc:/home/emmet/Documents$ git clone https://github.com/u-boot/u-boot
 emmet@homepc:/home/emmet/Documents$ cd u-boot
 emmet@homepc:/home/emmet/Documents/u-boot$ git checkout v2020.04
-emmet@homepc:/home/emmet/Documents/uboot$ git checkout -b u-boot-bb
+emmet@homepc:/home/emmet/Documents/u-boot$ git checkout -b u-boot-bb
 ```
 
 U-boot configuration is based on the Beaglebone Black's processor i.e.AM335X Arm Cortex A8. Lots of configuration files for various boards can be found in the /configs directory. 
@@ -290,7 +290,7 @@ emmet@homepc:/home/emmet/Documents/linux$ make distclean
 ```
 
 ## Configure and Build the kernel
-Select the ARM V7 kernel configuration file and launch the menuconfig window. The different types of architectures that can be supplied can be seen in the arch/ directory. In the case of building the kernel the architecture has to be expressed in addition to CROSS_COMPILE. 
+Select the ARM V7 kernel configuration file and launch the menuconfig window. In the case of building the kernel, the architecture has to be expressed in addition to CROSS_COMPILE and the various types of architectures that can be supplied can be seen in the ```arch``` directory. 
 
 ```bash
 emmet@homepc:/home/emmet/Documents/linux$ make ARCH=arm CROSS_COMPILE=arm-cortex_a8-linux-gnueabihf- multi_v7_defconfig
@@ -324,33 +324,21 @@ emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot$ sync
 
 U-Boot supports using uEnv.txt which is a text file that declares and initializes boot variables before U-Boot runs bootcmd. Create a file uEnv.txt, insert the contents below and copy it onto the boot partition:
 
->
->console=ttyS0,115200 
-> 
->ethaddr=02:f8:7e:a6:fc:e1
->
->ipaddr=192.168.1.1
->
->serverip=192.168.1.10
->
->bootfile=zImage
->
->fdtfile=am335x-boneblack.dtb
->
->loadaddr=0x80007fc0
->
->fdtaddr=0x80F80000
->
->loadfdt=fatload mmc 0:1 ${fdtaddr} ${fdtfile}
->
->loaduimage=fatload mmc 0:1 ${loadaddr} ${bootfile}
->
->mmc_args=setenv bootargs console=${console} ${optargs} root=/dev/mmcblk0p2 rootfstype=ext4
->
->fdtboot=run mmc_args; bootz ${loadaddr} - ${fdtaddr}
->
->uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot;
->
+```bash
+console=ttyS0,115200  
+ethaddr=02:f8:7e:a6:fc:e1
+ipaddr=192.168.1.1
+serverip=192.168.1.10
+bootfile=zImage
+fdtfile=am335x-boneblack.dtb
+loadaddr=0x80007fc0
+fdtaddr=0x80F80000
+loadfdt=fatload mmc 0:1 ${fdtaddr} ${fdtfile}
+loaduimage=fatload mmc 0:1 ${loadaddr} ${bootfile}
+mmc_args=setenv bootargs console=${console} ${optargs} root=/dev/mmcblk0p2 rootfstype=ext4
+fdtboot=run mmc_args; bootz ${loadaddr} - ${fdtaddr}
+uenvcmd=mmc rescan; run loaduimage; run loadfdt; run fdtboot;
+```
 
 Insert SD card back into the beaglebone and test the kernel:
 
