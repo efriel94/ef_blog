@@ -31,6 +31,19 @@ All walkthroughs are OSCP format.
 <br>
 
 
+### Miscellanous
+
+<ul>
+  {% for post in site.categories.misc reversed %}
+  <li>
+    <a href="{{ site.github.url }}{{ post.url }}">{{ post.title }}</a>
+    <p>{{news.meta}}</p>
+  </li>
+  {% endfor %}
+</ul>
+<br>
+
+
 ### Cheatsheets
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
 - <a href="https://redteamtutorials.com/2018/10/24/msfvenom-cheatsheet/">MSFVenom</a>
