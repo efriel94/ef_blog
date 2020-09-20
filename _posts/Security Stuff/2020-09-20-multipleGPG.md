@@ -8,12 +8,12 @@ image: misc/github.jpeg
 
 # Introduction
 
-Its common to have multiple Git identities when working across different projects which can be difficult to manage but for the majority of us we usually have two identities: one for work use and one for personal use. With each identity you’ll also have to separate GPG keys to manage for signing commits and so this tutorial explains how to switch git identities based on what directory your in.<br/>
+Its common to have multiple Git identities when working across different projects which can be difficult to manage but for the majority of us we usually have two identities: one for work use and one for personal use. With each identity you’ll also have to separate GPG keys to manage for signing commits and so this tutorial explains how to switch git identities automatically based on what directory your in.<br/>
 
 
 # Prerequisites
 
- - Two GPG keys generated for two different emails. Refer to the [Git Documentation on GPG](https://docs.github.com/en/enterprise/2.13/user/articles/generating-a-new-gpg-key)<br/><br/>
+ - Two GPG keys generated for two different emails. Refer to the ![Git Documentation on GPG](https://docs.github.com/en/enterprise/2.13/user/articles/generating-a-new-gpg-key)<br/><br/>
 
 
 # Configuring multiple git identities
