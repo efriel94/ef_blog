@@ -23,8 +23,10 @@ social:
 
 # Customize site text
 pagination:
-  next_page: 'Newer'
-  previous_page: 'Older'
+  paginate: 3
+  paginate_path: "/blog/page:num/" 
+  next_page: 'Next'
+  previous_page: 'Back'
 
 sharing_button_prompt: 'Feel free to share!'
 
