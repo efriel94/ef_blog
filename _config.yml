@@ -1,20 +1,22 @@
 # Jekyll-paginate-v2 configuration
-  pagination:
-   enabled: true
-   per_page: 5
-   permalink: '/page/:num/'
-   title: ':title - page :num of :max'
-   limit: 0
-   sort_field: 'date'
-   sort_reverse: true
+#  pagination:
+#   enabled: true
+#   per_page: 5
+#   permalink: '/page/:num/'
+#   title: ':title - page :num of :max'
+#   limit: 0
+#   sort_field: 'date'
+#   sort_reverse: true
+#   next_page: 'Next'
+#   previous_page: 'Back'
 
 #github pages name
 url: "emmetfriel.github.io"
 baseurl: "/ef_blog"
 
 # jekyll-paginate configuration
-#paginate: 3
-#paginate_path: "/blog/page:num/"
+paginate: 10
+paginate_path: "/blog/page:num/"
 
 # Build settings
 markdown:            kramdown
