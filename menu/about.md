@@ -10,9 +10,6 @@ C:\WINDOWS\system32 > whoami
 I am a Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security. This page is a personal wiki for various tutorials and documents.  
 
 
-### CV
-- <a href="{{ site.github.url }}/assets/img/Emmet_Friel_Resume.pdf">Resume.</a>
-
 ### Certifications
 - CEH (2019) 
 
