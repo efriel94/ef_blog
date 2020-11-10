@@ -7,14 +7,14 @@ title: "About"
 C:\WINDOWS\system32 > whoami
 ```
 
-I am a Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security. This page is a personal wiki for various tutorials and documents.  
+Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security. Opensource advocate and InfoSec enthusiast. This site acts as a personal wiki.   
 
 
 ### Certifications
 - CEH (2019) 
 
 ### Interests
-- Security challenges & CTFs. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w) which shows all the websites/platforms I use. 
+- Security challenges & CTFs. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w).
 - Hardware Design & Embedded Systems
 - Network Architecture and Security
 - Hold the rank of Contributor on Xilinx
