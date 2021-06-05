@@ -12,7 +12,7 @@
 
 #github pages name
 url: "https://emmetfriel.github.io"
-baseurl: ""
+# baseurl: ""
 
 # jekyll-paginate configuration
 paginate: 4
