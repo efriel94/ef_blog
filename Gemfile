@@ -28,6 +28,7 @@ gem 'jekyll-paginate'
 gem 'jekyll-sitemap'
 gem 'jekyll-seo-tag'
 gem 'kramdown-parser-gfm'
+gem 'jekyll-archives'
 
 #source gem files
 source 'https://rubygems.org'
