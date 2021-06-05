@@ -1,4 +1,4 @@
-# Jekyll-paginate-v2 configuration
+# #Jekyll-paginate-v2 configuration
 #  pagination:
 #   enabled: true
 #   per_page: 5
@@ -11,7 +11,7 @@
 #   previous_page: 'Back'
 
 #github pages name
-url: "emmetfriel.github.io"
+url: "https://emmetfriel.github.io"
 baseurl: "/blog"
 
 # jekyll-paginate configuration

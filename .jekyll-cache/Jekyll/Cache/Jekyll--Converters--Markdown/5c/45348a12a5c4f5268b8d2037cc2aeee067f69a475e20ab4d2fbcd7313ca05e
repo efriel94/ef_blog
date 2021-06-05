@@ -1,0 +1,166 @@
+I"k<h3 id="hackthebox">HackTheBox</h3>
+
+<p>All walkthroughs are OSCP format.</p>
+<ul>
+  
+  <li>
+    <a href="/hackthebox/bank.html">HackTheBox Walkthrough - Bank</a>
+    <p></p>
+  </li>
+  
+  <li>
+    <a href="/hackthebox/arctic.html">HackTheBox Walkthrough - Arctic</a>
+    <p></p>
+  </li>
+  
+  <li>
+    <a href="/hackthebox/hackthebox-optimum.html">HackTheBox Walkthrough - Optimum</a>
+    <p></p>
+  </li>
+  
+</ul>
+<p><br /></p>
+
+<h3 id="embedded-linux">Embedded Linux</h3>
+
+<ul>
+  
+  <li>
+    <a href="/embedded/embedded-linux.html">Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8</a>
+    <p></p>
+  </li>
+  
+</ul>
+<p><br /></p>
+
+<h3 id="miscellanous">Miscellanous</h3>
+
+<ul>
+  
+  <li>
+    <a href="/misc/multipleGPG.html">Working with multiple GPG keys across multiple git identities</a>
+    <p></p>
+  </li>
+  
+</ul>
+<p><br /></p>
+
+<h3 id="cheatsheets">Cheatsheets</h3>
+<ul>
+  <li><a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a></li>
+  <li><a href="https://redteamtutorials.com/2018/10/24/msfvenom-cheatsheet/">MSFVenom</a></li>
+  <li><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md">Windows Privelege Escalation</a></li>
+  <li><a href="https://www.blackhillsinfosec.com/password-spraying-other-fun-with-rpcclient/">Password spraying with RPCClient &amp; SMBClient</a></li>
+  <li><a href="https://devhints.io/curl">CURL</a></li>
+  <li><a href="https://www.markdownguide.org/basic-syntax/" target="_blank_">Markdown Syntax</a></li>
+</ul>
+
+<!-- original code
+<ul class="posts">
+  
+
+    
+      <h3>2020</h3>
+    
+
+    <li itemscope>
+      <a href="/misc/multipleGPG.html">Working with multiple GPG keys across multiple git identities</a>
+      <p class="post-date"><span><i class="fa fa-calendar" aria-hidden="true"></i> September 20 - <i class="fa fa-clock-o" aria-hidden="true"></i> 
+  
+  
+    2 minute read
+  
+
+
+
+</span></p>
+    </li>
+
+  
+
+    
+      
+      
+      
+    
+
+    <li itemscope>
+      <a href="/embedded/embedded-linux.html">Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8</a>
+      <p class="post-date"><span><i class="fa fa-calendar" aria-hidden="true"></i> May 16 - <i class="fa fa-clock-o" aria-hidden="true"></i> 
+  
+  
+    13 minute read
+  
+
+
+
+</span></p>
+    </li>
+
+  
+
+    
+      
+      
+      
+    
+
+    <li itemscope>
+      <a href="/hackthebox/bank.html">HackTheBox Walkthrough - Bank</a>
+      <p class="post-date"><span><i class="fa fa-calendar" aria-hidden="true"></i> April 16 - <i class="fa fa-clock-o" aria-hidden="true"></i> 
+  
+  
+    10 minute read
+  
+
+
+
+</span></p>
+    </li>
+
+  
+
+    
+      
+      
+      
+    
+
+    <li itemscope>
+      <a href="/hackthebox/arctic.html">HackTheBox Walkthrough - Arctic</a>
+      <p class="post-date"><span><i class="fa fa-calendar" aria-hidden="true"></i> April 13 - <i class="fa fa-clock-o" aria-hidden="true"></i> 
+  
+  
+    5 minute read
+  
+
+
+
+</span></p>
+    </li>
+
+  
+
+    
+      
+      
+      
+    
+
+    <li itemscope>
+      <a href="/hackthebox/hackthebox-optimum.html">HackTheBox Walkthrough - Optimum</a>
+      <p class="post-date"><span><i class="fa fa-calendar" aria-hidden="true"></i> April 7 - <i class="fa fa-clock-o" aria-hidden="true"></i> 
+  
+  
+    6 minute read
+  
+
+
+
+</span></p>
+    </li>
+
+  
+</ul>
+-->
+:ET

