@@ -1,1 +1,1 @@
-Sitemap: http://localhost:4000/ef_blog/sitemap.xml
+Sitemap: http://localhost:8000/ef_blog/sitemap.xml

@@ -15,8 +15,7 @@ url: "emmetfriel.github.io"
 baseurl: "/ef_blog"
 
 # jekyll-paginate configuration
-paginate: 10
-paginate_path: "/blog/page:num/"
+paginate: 4
 
 # Build settings
 markdown:            kramdown

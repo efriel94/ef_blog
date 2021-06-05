@@ -8,7 +8,7 @@ disqus:
 
 menu:
 - {name: 'About', path: 'menu', url: 'about.html'}
-- {name: 'Stuff', path: 'menu', url: 'projects.html'}
+- {name: 'Posts', path: 'menu', url: 'projects.html'}
 - {name: 'News', path: 'menu', url: 'news.html'}
 - {name: 'Contact', path: 'menu', url: 'contact.html'}
 

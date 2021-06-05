@@ -17,8 +17,8 @@
 </description>
 				
 				<pubDate>Sun, 20 Sep 2020 00:00:00 -0700</pubDate>
-				<link>http://localhost:4000/misc/multipleGPG.html</link>
-				<guid isPermaLink="true">http://localhost:4000/misc/multipleGPG.html</guid>
+				<link>http://localhost:8000/misc/multipleGPG.html</link>
+				<guid isPermaLink="true">http://localhost:8000/misc/multipleGPG.html</guid>
 			</item>
 		
 			<item>
@@ -32,8 +32,8 @@
 </description>
 				
 				<pubDate>Sat, 16 May 2020 00:00:00 -0700</pubDate>
-				<link>http://localhost:4000/embedded/embedded-linux.html</link>
-				<guid isPermaLink="true">http://localhost:4000/embedded/embedded-linux.html</guid>
+				<link>http://localhost:8000/embedded/embedded-linux.html</link>
+				<guid isPermaLink="true">http://localhost:8000/embedded/embedded-linux.html</guid>
 			</item>
 		
 			<item>
@@ -48,8 +48,8 @@
 </description>
 				
 				<pubDate>Thu, 16 Apr 2020 00:00:00 -0700</pubDate>
-				<link>http://localhost:4000/hackthebox/bank.html</link>
-				<guid isPermaLink="true">http://localhost:4000/hackthebox/bank.html</guid>
+				<link>http://localhost:8000/hackthebox/bank.html</link>
+				<guid isPermaLink="true">http://localhost:8000/hackthebox/bank.html</guid>
 			</item>
 		
 			<item>
@@ -63,8 +63,8 @@
 </description>
 				
 				<pubDate>Mon, 13 Apr 2020 00:00:00 -0700</pubDate>
-				<link>http://localhost:4000/hackthebox/arctic.html</link>
-				<guid isPermaLink="true">http://localhost:4000/hackthebox/arctic.html</guid>
+				<link>http://localhost:8000/hackthebox/arctic.html</link>
+				<guid isPermaLink="true">http://localhost:8000/hackthebox/arctic.html</guid>
 			</item>
 		
 			<item>
@@ -78,8 +78,8 @@
 </description>
 				
 				<pubDate>Tue, 07 Apr 2020 00:00:00 -0700</pubDate>
-				<link>http://localhost:4000/hackthebox/hackthebox-optimum.html</link>
-				<guid isPermaLink="true">http://localhost:4000/hackthebox/hackthebox-optimum.html</guid>
+				<link>http://localhost:8000/hackthebox/hackthebox-optimum.html</link>
+				<guid isPermaLink="true">http://localhost:8000/hackthebox/hackthebox-optimum.html</guid>
 			</item>
 		
 	</channel>
