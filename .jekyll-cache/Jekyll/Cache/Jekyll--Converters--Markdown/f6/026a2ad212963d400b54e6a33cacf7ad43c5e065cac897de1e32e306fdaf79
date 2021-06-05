@@ -1,3 +1,0 @@
-I"@<h1 id="introduction">Introduction</h1>
-<p>Bank is an “easy” machine on HackTheBox. This box was a fairly steep learning curve albeit there was a alot of important takeways being the DNS enumeration, Virtual Host Routing check, modifying HTTP response headers to stop redirecting webpages and the RCE technique.</p>
-:ET
