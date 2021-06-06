@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Optimum"
+title: "HTB: Optimum Walkthrough"
 author: "Emmet Friel"
 categories: HackTheBox
 image: htb/optimum/optimum.png
