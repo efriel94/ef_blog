@@ -11,7 +11,8 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 
 ### Certifications
-- CEH (2019) 
+- AWS Cloud Practitioner (2021)
+- CEH (2019)
 
 ### Interests
 - Security challenges & CTFs. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w).
