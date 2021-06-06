@@ -5,6 +5,7 @@ title: "Archives"
 
 <br>
 # Year
+--------
 <ul>
 {% for post in site.posts %}
   {% assign currentdate = post.date | date: "%Y" %}
@@ -18,6 +19,7 @@ title: "Archives"
 
 <br>
 # Category
+--------
 {% comment %}
 #
 #  Change date order by adding '| reversed'
@@ -34,8 +36,10 @@ title: "Archives"
   {% endfor %}
 </ul>
 {% endfor %}
+<br>
 
-### Cheatsheets
+# Cheatsheets
+-------
 - <a href="https://www.blackmoreops.com/2016/12/20/kali-linux-cheat-sheet-for-penetration-testers/" target="_blank_">Kali Linux Cheat Sheet</a>
 - <a href="https://redteamtutorials.com/2018/10/24/msfvenom-cheatsheet/">MSFVenom</a>
 - <a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md">Windows Privelege Escalation</a>
