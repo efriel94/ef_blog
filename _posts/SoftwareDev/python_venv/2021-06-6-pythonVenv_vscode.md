@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Python virtual environment in vscode"
+title: "Python Virtual Environment in VSCode"
 author: "Emmet Friel"
 categories: SoftwareDev
 image: softwaredev/python-venv.jpeg
