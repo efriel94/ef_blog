@@ -7,7 +7,7 @@ image: softwaredev/python-venv.jpeg
 ---
 
 # Why use a virtual environment?
-Its good practice to isolate dependencies and libraries between applications whatever language your coding in so everything isn't lumped into your system wide dependency list. It makes installing, maintaining and version controlling project dependencies alot easier and porting the project over to other people to use means that their not installing unncessary dependencies clogging up their system. Visual Studio Code IDE provides a nice feature for creating and working with Python environments. By default, the Python vscode extension looks for and uses the first Python interpreter it finds in the system path. If it doesn't find an interpreter, it issues a warning. We can change this default behaviour to point VSCode to an Python interpreter that will activate a virtual environment.
+Its good practice to isolate dependencies and libraries between applications whatever language your coding in so everything isn't lumped into your system wide dependency list. It makes installing, maintaining and version controlling project dependencies alot easier and porting the project over to other people to use means that their not installing unncessary dependencies. Visual Studio Code IDE provides a nice feature for creating and working with Python environments. By default, the Python vscode extension looks for and uses the first Python interpreter it finds in the system path. If it doesn't find an interpreter, it issues a warning. We can change this default behaviour to point VSCode to a Python interpreter that will activate a virtual environment.
 
 <br>
 
@@ -34,10 +34,11 @@ cd project
 mkdir src/
 python -m venv virtual_env/
 ```
-Navigate into src/ directory and open up vscode:
+Navigate into src/ directory, create an empty python file and open up vscode:
 
 ```bash
 cd src/
+touch test.py
 code .
 ```
 <br>
@@ -45,7 +46,6 @@ code .
 # Add python virtual environment to vscode
 
 - Install two vscode extensions: ```Python, Python for VSCode```
-- Inside your src/ directory create an empty python file i.e. test.py or anything.
 - Open up workspace settings (settings.json) via:
 
 ```bash
