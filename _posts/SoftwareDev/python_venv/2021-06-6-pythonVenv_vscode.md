@@ -56,7 +56,7 @@ Insert the full path to your python virtual environment folder in settings.json:
 
 ```bash
 { 
-    "python.pythonPath": "/home/user/Documents/project/work_env" 
+    "python.pythonPath": "/home/user/Documents/project/virtual_env" 
 }
 ```
 Save and exit settings.json. <br>
