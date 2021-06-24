@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Using ansible-vault to pass sensitive information to playbooks"
+title: "Using ansible vault to pass sensitive information to playbooks"
 author: "Emmet Friel"
 categories: ansible
 image: devops/ansible.jpeg
