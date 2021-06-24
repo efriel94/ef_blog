@@ -181,7 +181,7 @@ Since we need to become sudo to perform this task its necessary to pass ansible 
 ```bash
 ansible@server:~/Documents$ cat inventory.ini 
 [dev]
-172.16.190.129 ansible_ssh_user=emmet ansible_sudo_pass=admin234
+172.16.190.129 ansible_ssh_user=emmet ansible_sudo_pass=password123
 ```
 **Note: For the purposes of this tutorial this method will suffice however it is not secure to pass sensitive information in plaintext and not recommended. Ansible-vault is typically used for passing sensitive information and will be covered in future posts.**
 

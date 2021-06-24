@@ -20,3 +20,17 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 - Network Architecture and Security
 - Hold the rank of Contributor on Xilinx
 - Contribute to the <a href="https://stats.foldingathome.org/donor/73291172" target="_blank">Folding@home</a> project for the advancement of medical research.
+
+
+### Experience
+- Working on post quantum cryptography proof of concepts using the BGV encryption scheme (C/C++).
+- Full stack web development
+- Developing custom Linux distributions for IOT devices
+- Building out cyber range red team and blue team training scenarios which involved:
+    - Working with cisco switches and data centre related operations
+    - VMware / VCentre experience
+    - Upskilling in red team activity
+    - Upskilling in blue team activity
+- Using AWS for spinning up and provisioning cloud infrastructure
+- Using Terraform and IAC for automatically spinning up, provisioning and deploying cloud infrastructure
+- DevOps (Docker, Ansible, GitLab CI/CD)
