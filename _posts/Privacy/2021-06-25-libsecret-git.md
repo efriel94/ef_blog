@@ -7,7 +7,7 @@ image: git/keyring.png
 ---
 
 # Introduction
-I was working on a project recently that I was prevented from using SSH authentication for pushing code so it quickly became a burden inputting username and access token into the prompt. Git has three options for storing credentials:
+I was working on a project recently that I was prevented from using SSH authentication for pushing code so it quickly became a burden inputting username and access token into the prompt over and over. Git has three options for storing credentials:
 1. Cache credential helper (stores passwords in memory)
 2. Store credential helper (stores passwords in plaintext)
 3. Use a third party solution
@@ -32,4 +32,6 @@ Passwords are stored in: ```/.local/share/keyrings``` directory.
 
 # Store Git password to libsecret
 
-The next time you Git push, input your credentials, libsecret will store credentials within the encrypted keyring and Git will use libsecret for decrypting credentials for all proceeding authentications. That's it.
+The next time you Git push, input your credentials, libsecret will store credentials within the encrypted keyring and Git will use libsecret for decrypting credentials for all proceeding authentications. That's it. <br>
+
+If you wish to remove the credentials remove the files within keyring directory.
