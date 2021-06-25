@@ -2,7 +2,7 @@
 layout: post
 title: "Working with multiple GPG keys across multiple git identities"
 author: "Emmet Friel"
-categories: Privacy
+categories: Git
 image: misc/github.jpeg
 ---
 
