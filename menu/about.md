@@ -23,14 +23,16 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 
 ### Experience
-- Working on post quantum cryptography proof of concepts using the BGV encryption scheme (C/C++).
-- Full stack web development
-- Developing custom Linux distributions for IOT devices
+- Working on post quantum cryptography proof of concepts (C/C++).
+- Full stack web development (HTML,CSS,Bootstrap,JS,PHP)
+- Developing custom Linux distributions for IOT devices.
+    - Building manually all stages of the toolchain from source code using make
+    - Building using build systems such as Petalinux (Xilinx tool for FPGAs), Buildroot and Yocto
 - Building out cyber range red team and blue team training scenarios which involved:
     - Working with cisco switches and data centre related operations
     - VMware / VCentre experience
-    - Upskilling in red team activity
-    - Upskilling in blue team activity
+    - Red team activity
+    - Blue team activity
 - Using AWS for spinning up and provisioning cloud infrastructure
 - Using Terraform and IAC for automatically spinning up, provisioning and deploying cloud infrastructure
 - DevOps (Docker, Ansible, GitLab CI/CD)
