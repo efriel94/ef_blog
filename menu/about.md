@@ -27,7 +27,7 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 - Full stack web development (HTML,CSS,Bootstrap,JS,PHP)
 - Developing custom Linux distributions for IOT devices.
     - Building manually all stages of the toolchain from source code using make
-    - Building using build systems such as Petalinux (Xilinx tool for FPGAs), Buildroot and Yocto
+    - Using build systems such as Petalinux (Xilinx tool for FPGAs), Buildroot and Yocto
 - Building out cyber range red team and blue team training scenarios which involved:
     - Working with cisco switches and data centre related operations
     - VMware / VCentre experience
