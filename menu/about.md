@@ -11,28 +11,26 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 
 ### Certifications
+- CCNA (TBC)
 - AWS Cloud Practitioner (2021)
 - Certified Ethical Hacker (2019)
 
 ### Interests
-- Security challenges & CTFs. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w).
-- Hardware Design & Embedded Systems
-- Network Architecture and Security
+- Security research and threat intelligence. 
+- CTFs and war games. You can view my [WeChall profile](https://www.wechall.net/profile/un5h4d0w).
+- C/C++ development
+- Network security
 - Hold the rank of Contributor on Xilinx
 - Contribute to the <a href="https://stats.foldingathome.org/donor/73291172" target="_blank">Folding@home</a> project for the advancement of medical research.
 
 
 ### Experience
-- Working on post quantum cryptography proof of concepts (C/C++).
+- Pentesting and Vulnerability assessments.
+- Post quantum cryptography development (C/C++).
+- PUF (Physical Unclonable Functions) development using embedded C.
 - Full stack web development (HTML,CSS,Bootstrap,JS,PHP)
 - Developing custom Linux distributions for IOT devices.
-    - Building manually all stages of the toolchain from source code using make
     - Using build systems such as Petalinux (Xilinx tool for FPGAs), Buildroot and Yocto
-- Building out cyber range red team and blue team training scenarios which involved:
-    - Working with cisco switches and data centre related operations
-    - VMware / VCentre experience
-    - Red team activity
-    - Blue team activity
-- Using AWS for spinning up and provisioning cloud infrastructure
-- Using Terraform and IAC for automatically spinning up, provisioning and deploying cloud infrastructure
+- Building out red team and blue team training scenarios.
+- Building out and deploying cloud infrastructure using AWS with the help of Terraform, Vagrant, Packer and Ansible.
 - DevOps (Docker, Ansible, GitLab CI/CD)
