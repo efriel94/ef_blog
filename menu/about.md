@@ -11,7 +11,7 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 
 ### Certifications
-- CCNA (TBC)
+- CCNA (TBC 2022)
 - AWS Cloud Practitioner (2021)
 - Certified Ethical Hacker (2019)
 
@@ -30,7 +30,6 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 - PUF (Physical Unclonable Functions) development using embedded C.
 - Full stack web development (HTML,CSS,Bootstrap,JS,PHP)
 - Developing custom Linux distributions for IOT devices.
-    - Using build systems such as Petalinux (Xilinx tool for FPGAs), Buildroot and Yocto
+    - Using build systems such as Petalinux (Xilinx based FPGAs), Buildroot and Yocto.
 - Building out red team and blue team training scenarios.
-- Building out and deploying cloud infrastructure using AWS with the help of Terraform, Vagrant, Packer and Ansible.
-- DevOps (Docker, Ansible, GitLab CI/CD)
+- Building out and deploying cloud infrastructure using AWS via Terraform, Vagrant, Packer and Ansible.
