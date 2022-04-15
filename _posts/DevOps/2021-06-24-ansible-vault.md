@@ -2,7 +2,7 @@
 layout: post
 title: "Secure variable secrets in playbooks using Ansible Vault"
 author: "Emmet Friel"
-categories: ansible
+categories: DevOps
 image: devops/ansible.jpeg
 ---
 

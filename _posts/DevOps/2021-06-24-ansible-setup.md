@@ -2,7 +2,7 @@
 layout: post
 title: "Ansible: Getting Started"
 author: "Emmet Friel"
-categories: ansible
+categories: DevOps
 image: devops/ansible.jpeg
 ---
 

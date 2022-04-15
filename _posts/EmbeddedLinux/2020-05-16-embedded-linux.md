@@ -2,7 +2,7 @@
 layout: post
 title: "Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8"
 author: "Emmet Friel"
-categories: embedded
+categories: Unix/Linux
 image: embedded/bb-linux/linux.jpg
 ---
 
