@@ -55,4 +55,19 @@ $$
 HW_b = \frac{1}{m} \sum_{i=1}^n (R_{i,b})
 $$
 
+## Uniqueness
+Uniqueness metric evaluates the ability of a PUF to distinguish a device across an array of identical devices. Effectively its measuring the inter-chip HD across a group of $m$ devices. Ideally you want to evaluate that each response is seen to be unique across devices for a given challenge as this improves the main property of the PUF: unclonability, both from a mathematical perspective as well as physical. 
+Assuming the uniqueness per bit $U_b$ is independent and identically distributed, the uniqueness of a PUF is given as:
+
+$$
+U = \frac{1}{n} \sum_{b=1}^{n} U_b
+$$
+
+Where $U_b$ is given as:
+
+$$
+U_b = \frac{2}{m(m-1)} \sum_{i=1}^{m-1} \sum_{j=i+1}^{m} HD(R_{i,b}, R{j,b})
+$$
+
+
 <!-- one must have, first of all, a solid grounding in the PUF design and implementation concepts, basic cryptography knowledge and the numerous statistical metrics associated, PUF co and resources are far and few in explaining those metrics in layman terms for us non-academics. To understand how to those metrics requires a basic understanding in statistical analysis, PUF concepts,     -->
