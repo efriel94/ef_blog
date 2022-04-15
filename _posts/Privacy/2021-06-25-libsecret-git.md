@@ -2,7 +2,7 @@
 layout: post
 title: "Libsecret: Securely pass Git credentials"
 author: "Emmet Friel"
-categories: Git
+categories: Programming
 image: git/keyring.png
 ---
 
