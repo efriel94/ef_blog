@@ -9,11 +9,11 @@ image: crypto/what-the-hell-does-that-even-mean.jpg
 
 # Introduction
 
-Reading academic papers as a non-academic in a research area that you have (at the time of writing) little experience in is like, as my grandmother would say, "trying to read a doctor's prescription". To evaluate the performance and security of a PUF it is necessary have a solid grounding of PUF concepts, basic cryptography and statistical mathematics. The problem is that resources is far and few between in providing a simple breakdown of PUF evaluation metrics for us non-academics.<br>
+Reading academic papers as a non-academic in a research area that you have (at the time of writing) little experience in is like, as my grandmother would say, "trying to read a doctor's prescription". To evaluate the performance and security of a PUF it is necessary have a solid grounding of PUF concepts, basic cryptography and statistical mathematics. The problem is that resources is far and few between in providing a simple breakdown of PUF evaluation metrics with the equations tied to each metric for us non-academics.<br>
 
-This post serves to demistify PUF analysis from academic papers to provide a simple breakdown and reference of the evaluation metrics in layman terms. <br> 
+This post outlines a simple breakdown of PUF evaluation metrics in layman terms with the mathematical equations of each metric. <br> 
 
-To accurately evaluate the statistical performance and security of a PUF the following metrics is used:
+To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
 -	Hamming Distance (HD)
 -	Hamming Weight (HW)
 -	Uniqueness
@@ -66,8 +66,14 @@ $$
 Where $U_b$ is given as:
 
 $$
-U_b = \frac{2}{m(m-1)} \sum_{i=1}^{m-1} \sum_{j=i+1}^{m} HD(R_{i,b}, R{j,b})
+U_b = \frac{2}{m(m-1)} \sum_{i=1}^{m-1} \sum_{j=i+1}^{m} HD(R_{i,b}, R_{j,b})
 $$
+
+If different PUF chips produce similar responses to the same challenge, then an adversary may predict PUF responses using modelling attacks.<br>
+
+## Minimum Entropy
+When using PUFs in applications minimum entropy estimation is essential. Entropy is a measure of the unpredictability in PUF responses, and the minimum entropy is an evaluation of the worst-case scenario. In the context of security evaluation, worst-case analysis is preferable to best case. Using the test suite of the National Institute of Standards and Technology (NIST) specification (SP) 800-90B is currently considered the best method for estimating the min-entropy of PUF responses.<br><br>
+However note that there are problems with entropy estimation using NIST SP 800-90B. First, NIST SP 800-90B is an entropy estimation suite for RNGs that assumes sequential data input. Next, the entropy estimation suite of NIST SP 800-90B is known to be unsuitable for two-dimensional memory-based PUFs such as SRAM PUF since its designed to operate on one-dimensional data such as RNGs. There are spatial correlations between responses in PUFs, especially two-dimensional PUFs (e.g., SRAM PUF). Therefore, the approach that concatenates PUF responses obfuscates the spatial correlations and may cause overestimation of PUF entropy.
 
 
 <!-- one must have, first of all, a solid grounding in the PUF design and implementation concepts, basic cryptography knowledge and the numerous statistical metrics associated, PUF co and resources are far and few in explaining those metrics in layman terms for us non-academics. To understand how to those metrics requires a basic understanding in statistical analysis, PUF concepts,     -->
