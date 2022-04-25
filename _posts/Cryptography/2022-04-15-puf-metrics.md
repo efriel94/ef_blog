@@ -143,7 +143,29 @@ $$
 Uniformity = \frac{1}{m} \sum_{i=1}^{m} Uniformity(i)
 $$
 
-An unbiased PUF cell has a uniformity of 0.5
+An unbiased PUF cell has a uniformity of 0.5 <br>
+
+## Reliability 
+
+An ideal PUF should always output the exact response when given the same challenge. However, in practice this isn’t the case due to the small electrical variations in the silicon which may cause a number of the response bits to flip or change. Other factors affect the reliability such as temperature and power supply. The reliability of the PUF can be used to estimate the number of bits which keep a stable value over time. The stability of the PUF is the number of bits in a response which change value from repeating the same challenge over and over. <br>
+
+Stability can be estimated by evaluating the intra-chip hamming distance. By supplying the PUF with the same challenge over a significant number of measurements $M$ of $n$-bit responses $$R_{m}^{'}$$ where $R_m$ is the baseline reference of the $m$-th device:
+
+$$
+Stability(i) = \frac{1}{M}\sum_{i=0}^{M-1}fHD(R_{i,b},R_{i,b}^{'})
+$$
+
+For a population of $m$ devices, it can be averaged as:
+
+$$
+Stability = \frac{1}{m}\sum_{i=0}^{m-1}Stability(i)
+$$
+
+The reliability of the $m$-th device can be quantified as the number of bits that are stable over time:
+
+$$
+Reliability(m) = 1 - Stability(m)
+$$
 
 
 
