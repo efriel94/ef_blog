@@ -183,5 +183,10 @@ $$
 Bias(n) = \frac{1}{n}\sum_{i=0}^{R-1}R_{i,n}
 $$
 
+## References
+- [https://pure.qub.ac.uk/en/publications/a-large-scale-comprehensive-evaluation-of-single-slice-ring-oscil-4](https://pure.qub.ac.uk/en/publications/a-large-scale-comprehensive-evaluation-of-single-slice-ring-oscil-4)
+- [https://www.researchgate.net/publication/327196667_A_Theoretical_Model_to_Link_Uniqueness_and_Min-Entropy_for_PUF_Evaluations](https://www.researchgate.net/publication/327196667_A_Theoretical_Model_to_Link_Uniqueness_and_Min-Entropy_for_PUF_Evaluations)
+- [https://ebrary.net/29238/computer_science/hardware_security_and_trust_design_and_deployment_of_integrated_circuits_in_a_threatened_environmen](https://ebrary.net/29238/computer_science/hardware_security_and_trust_design_and_deployment_of_integrated_circuits_in_a_threatened_environmen)
+- [https://mediatum.ub.tum.de/doc/1612868/1612868.pdf](https://mediatum.ub.tum.de/doc/1612868/1612868.pdf)
 
 <!-- one must have, first of all, a solid grounding in the PUF design and implementation concepts, basic cryptography knowledge and the numerous statistical metrics associated, PUF co and resources are far and few in explaining those metrics in layman terms for us non-academics. To understand how to those metrics requires a basic understanding in statistical analysis, PUF concepts,     -->
