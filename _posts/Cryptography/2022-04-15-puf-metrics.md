@@ -108,6 +108,14 @@ The ideal case is where $$\widetilde{H}_{min} = 1$$, indicating the probability 
 
 GitHub Link: [NIST SP800-90B suite](https://github.com/usnistgov/SP800-90B_EntropyAssessment)
 
+## Context Tree Weighting
+Previously discussed, the min-entropy is the measure of unpredictability. To evaluate unpredictability of a PUF the CTW algorithm is typically used to calculate the upper bound on the entropy. It represents the ratio of response information before compression and after compression. CTW is a type of statistical method for data compression which basically makes an estimate on the probability of the next bit by using its past history. See this **[writeup on CTW data compression](https://meiji163.github.io/post/context-tree-weighting/)** for more info. <br>
+
+The ideal CTW ratio of a PUF is 100% indicating that it is difficult to compress the response due to its randomness. <br><br>
+The algorithm is typically used among other compressors due to the algorithm approaching source entropy to estimate the secrecy rate of two-dimensional data from fuzzy sources such as biometrics and PUFs. The secrecy rate equals the mutual information between the true response and another measurement. Mutual information quantifies the amount of information obtained from one random variable by observing the other random variable. <br>
+
+It’s also possible to evaluate mutual information using the CTW algorithm. See paper: [Comparative Analysis of SRAM Memories Used as PUF Primitives](https://www.intrinsic-id.com/wp-content/uploads/2017/05/SRAM-memories.pdf)
+
 
 
 
