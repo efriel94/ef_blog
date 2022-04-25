@@ -9,9 +9,9 @@ image: crypto/what-the-hell-does-that-even-mean.jpg
 
 # Introduction
 
-Reading academic papers as a non-academic in a research area that you have (at the time of writing) little experience in is like, as my grandmother would say, "trying to read a doctor's prescription". To evaluate the performance and security of a PUF it is necessary have a solid grounding of PUF concepts, basic cryptography and statistical mathematics. The problem is that resources is far and few between in providing a simple breakdown of PUF evaluation metrics with the equations tied to each metric for us non-academics.<br>
+Reading academic papers as a non-academic in a research area that you have (at the time of writing) little experience in is like, as my grandmother would say, "trying to read a doctor's prescription".<br>
 
-This post outlines a simple breakdown of PUF evaluation metrics in layman terms with the mathematical equations of each metric. <br> 
+This post outlines a simple breakdown of PUF evaluation metrics with the mathematical equations attached to each one. It requires only a fundamental understanding of PUF, statistical mathematics and cryptography. <br> 
 
 To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
 -	Hamming Distance (HD)
@@ -72,8 +72,43 @@ $$
 If different PUF chips produce similar responses to the same challenge, then an adversary may predict PUF responses using modelling attacks.<br>
 
 ## Minimum Entropy
-When using PUFs in applications minimum entropy estimation is essential. Entropy is a measure of the unpredictability in PUF responses, and the minimum entropy is an evaluation of the worst-case scenario. In the context of security evaluation, worst-case analysis is preferable to best case. Using the test suite of the National Institute of Standards and Technology (NIST) specification (SP) 800-90B is currently considered the best method for estimating the min-entropy of PUF responses.<br><br>
-However note that there are problems with entropy estimation using NIST SP 800-90B. First, NIST SP 800-90B is an entropy estimation suite for RNGs that assumes sequential data input. Next, the entropy estimation suite of NIST SP 800-90B is known to be unsuitable for two-dimensional memory-based PUFs such as SRAM PUF since its designed to operate on one-dimensional data such as RNGs. There are spatial correlations between responses in PUFs, especially two-dimensional PUFs (e.g., SRAM PUF). Therefore, the approach that concatenates PUF responses obfuscates the spatial correlations and may cause overestimation of PUF entropy.
+When using PUFs in applications minimum entropy estimation is essential. Entropy is a measure of the unpredictability in PUF responses, and the minimum entropy is an evaluation of the worst-case scenario. In the context of security evaluation, worst-case analysis is preferable to best case. Using the test suite of the National Institute of Standards and Technology (NIST) specification (SP) 800-90B is currently considered the best method for estimating the min-entropy of PUF responses.<br>
+
+Interestingly, there has been ongoing research into problems using NIST SP 800-90B when evaluating it for two-dimensional data structures such as SRAM PUFs:
+
+> First, NIST SP 800-90B is an entropy estimation suite for RNGs that assumes sequential data input. PUFs with an evaluator can intentionally control the ordering of PUF responses by using PUF challenges. Next, the entropy estimation suite of NIST SP 800-90B is known to be unsuitable for two-dimensional memory-based PUFs such as SRAM PUF. The entropy estimation suite is basically designed to operate on one-dimensional data, such as RNGs. There are spatial correlations between responses in PUFs, especially two-dimensional PUFs (e.g., SRAM PUF). Therefore, the approach that concatenates PUF responses obfuscates the spatial correlations and may cause overestimation of PUF entropy.
+
+See paper for more info: **[Entropy Estimation of PUFs with Offset Error](https://eprint.iacr.org/2020/1284.pdf)**
+
+The n-bit responses of m devices have an occurrence probability at bit of $p1$ (logic 1) and $p0$ (logic 0) where:
+
+$$
+p1 = \frac{HW_b}{m}
+$$
+
+$$
+p0 = 1- \frac{HW_b}{m}
+$$
+
+Where $HW_b$ is the number of 1’s in m devices. Therefore, the minimum entropy $\widetilde{H}_{min}$ of the design:
+
+$$
+\widetilde{H}_{min} = \frac{1}{n} \sum_{b=1}^{n}\widetilde{H}_{min,b}
+$$
+
+Where the minimum entropy per bit $\widetilde{H}_{min,b}$:
+
+
+$$
+\widetilde{H}_{min,b} = - log_{2}(pb_max)$
+$$
+
+Where the maximum probability, $pb_{max}=max⁡(p_0,p_1)$
+The ideal case is where $$\widetilde{H}_{min} = 1$$, indicating the probability of a given bit being equal to 0 or 1 is equal $$pb_{max}=0.5$$. 
+
+GitHub Link: [NIST SP800-90B suite](https://github.com/usnistgov/SP800-90B_EntropyAssessment)
+
+
 
 
 <!-- one must have, first of all, a solid grounding in the PUF design and implementation concepts, basic cryptography knowledge and the numerous statistical metrics associated, PUF co and resources are far and few in explaining those metrics in layman terms for us non-academics. To understand how to those metrics requires a basic understanding in statistical analysis, PUF concepts,     -->
