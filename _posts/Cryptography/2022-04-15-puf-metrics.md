@@ -9,11 +9,7 @@ image: crypto/what-the-hell-does-that-even-mean.jpg
 
 # Introduction
 
-Reading academic papers as a non-academic in a research area that you have (at the time of writing) little experience in is like, as my grandmother would say, "trying to read a doctor's prescription".<br>
-
-This post outlines a simple breakdown of PUF evaluation metrics with the mathematical equations attached to each one. It requires only a fundamental understanding of PUF, statistical mathematics and cryptography. <br> 
-
-To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
+This post outlines a simple breakdown of common PUF evaluation metrics and their associated mathematical and cryptographic concepts. To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
 -	Hamming Distance (HD)
 -	Hamming Weight (HW)
 -	Uniqueness
