@@ -23,16 +23,16 @@ Packaging and structuring Python projects involves three main components in the 
 - Overview of pyproject.toml, setup.cfg and setup.py
 - The layout and structure of a Python project
 - Building and packaging an example app
-- Install the app in a venv
+- Install the app in a python venv
 - Testing the app
 
 <br>
 
 # Overview of pyproject.toml, setup.cfg and setup.py
 
-Packaging and installing python projects has been around for 20 years using [distutils/setuptools](https://setuptools.pypa.io/en/latest/userguide/quickstart.html) and recently has been going through a transistional phase so you could achieve the same thing using a few different ways but the purpose of this post is to outline the up-to-date modern approach. Packaging and installing Python projects evolved from the initial setup.py to setup.cfg and now to the new and shiny pyproject.toml format.
+Packaging and installing python projects has been around for 20 years using [distutils/setuptools](https://setuptools.pypa.io/en/latest/userguide/quickstart.html) and recently has been going through a transistional phase so you could achieve the same thing using a few different ways but the purpose of this post is to outline the up-to-date modern approach, time of publishing this. Packaging and installing Python projects evolved from the initial setup.py to setup.cfg and now to the new and shiny pyproject.toml format.
 
-- **pyproject.toml**, first introduced in 2016 under PEP-518 as a configuration file for specifying build dependencies to be used alongside setuptools. The .toml format was adopted in PEP-621 (2020) for storing project metadata and finally adopted in the more recent PEP-660 for superseding setup.py for editable installs e.g ```pip install --editable . ``` for installing python projects in development mode.
+- **pyproject.toml**, first introduced in 2016 under PEP-518 as a configuration file for specifying build dependencies to be used alongside setuptools. The .toml format was adopted in PEP-621 (2020) for storing project metadata and finally adopted in the more recent PEP-660 for superseding setup.py for editable installs e.g ```pip install --editable . ```. This installs python projects in development mode.
 
 At the time of writing since I noted Python is going through a transistional phase **its recommended that you use all three configuration files in conjunction** for a stable build while the pyproject.toml is still under active development as its still considered experimental.<br>
 
@@ -110,7 +110,7 @@ console_scripts =
 
 **[metadata]**: Defining project metadata and information <br>
 **[options]** : Defines project requirements and automatically searches for python packages in the `src/` subdirectory using `package_dir`. Also note that `[options.packages.find] where` corresponds to the same value in `package_dir` <br>
-**[options.entry_points]**: Entry points are a useful feature of the Python ecosystem. Every project installed from a distribution it can advertise components to be used by other code. Installed distributions can specify `console_scripts` entry points, each one simple referring to a different Python function. When pip installs the distribution, it will create a command-line wrapper for each entry point. <br>
+**[options.entry_points]**: Entry points are a useful feature of the Python ecosystem. Every project installed from a distribution it can advertise components to be used by other code. Installed distributions can specify `console_scripts` entry points, each one simple referring to a different Python function. When pip installs the distribution, it will create a binary for each entry point. <br>
 
 I am creating two entry points for this application so once I install the Python project it will produce two Python binarys, each one with a different functionality.<br><br>
 
@@ -122,7 +122,7 @@ requires=["setuptools>=62", "wheel"]
 build-backend="setuptools.build_meta"
 ```
 
-The `build-system` table is used to tell the build frontend i.e **build** or **pip** what build system to use i.e. **setuptools,poetry** etc and other plugins required such as **wheel** to build the package. We could have certainly included our project metadata, dependencies etc into the `pyproject.toml` however for the purpose of this tutorial I opted to go down the `setup.cfg`. <br> 
+The `build-system` table is used to tell the build frontend i.e **build** or **pip** what build system to use i.e. **setuptools,poetry** etc and other plugins required such as **wheel** to build the package. We could have certainly included our project metadata, dependencies etc into the `pyproject.toml` however for the purpose of this tutorial I opted to define it in `setup.cfg`. <br> 
 
 Have a look at official Python documentation on how to do this: [PEP-621](https://peps.python.org/pep-0621/) <br><br>
 
@@ -134,7 +134,7 @@ from setuptools import setup
 setup()
 ```
 
-Simple boilerplate is required to work with setuptools for editable installs i.e. `pip install --editable ```. This is usually for working on the project in development mode as we don't wish to perpetually reinstall the project once we edit a line of code. 
+Simple boilerplate is required to work with setuptools for editable installs i.e. ```pip install --editable```. This is usually for working on the project in development mode as we don't wish to perpetually reinstall the project once we edit a line of code. 
 
 ### src/hello_world/mymodule.py
 
@@ -194,7 +194,7 @@ Successfully installed helloworld-0.0.1 numpy-1.23.0
 
 # Testing the installed app
 
-Since the build configuration specified two entry points i.e **myapp1,myapp2** each one pointing to a different function, the installed distribution will produce two binary command-line wrappers:
+Since the build configuration specified two entry points i.e **myapp1,myapp2**, configured in `setup.cfg` each one pointing to a different function, the installed distribution will produce two binary command-line wrappers:
 
 ```zsh
 (.myvenv) emmet:python-project/ $ cd .myvenv/bin
