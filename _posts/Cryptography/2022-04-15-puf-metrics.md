@@ -9,6 +9,8 @@ image: crypto/what-the-hell-does-that-even-mean.jpg
 
 # Introduction
 
+Working as a non academic (engineer) in the academic field of PUF (Physical Unclonable Functions) trying to digest heavyweight academic papers was a struggle to say the least. I needed to write code in the past to evaluate the security of a PUF and so to do that I needed to understand the underlying metrics. This post is a PUF-All-in-One Metric Evaluator for Dummies.    
+
 This post outlines a simple breakdown of common PUF evaluation metrics and their associated mathematical and cryptographic concepts. To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
 -	Hamming Distance (HD)
 -	Hamming Weight (HW)
