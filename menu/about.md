@@ -26,9 +26,9 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 ### Experience
 - Pentesting and Vulnerability assessments.
-- Post quantum cryptography development (C/C++).
-- PUF (Physical Unclonable Functions) development using embedded C.
-- Full stack web development (HTML,CSS,Bootstrap,JS,PHP)
+- Applied cryptography in FHE, Privacy Preserving ML and PUF.
+- Maintaining, configuring, patching Data Centre router/switch gear, Firewalls etc (Cisco, Mellonox, Fortigate)
+- Full stack web development
 - Developing custom Linux distributions for IOT devices.
     - Using build systems such as Petalinux (Xilinx based FPGAs), Buildroot and Yocto.
 - Building out red team and blue team training scenarios.
