@@ -9,7 +9,7 @@ image: softwaredev/pyprojecttoml.jpeg
 
 # Introduction 
 
-Packaging, structuring and setting up Python projects is something that I rarely took into consideration before this post partly because I don't often create projects in python, it's mainly scripting for automation but the scenario arose in work where we'll be creating an opensource CLI application and so the first thing that needed to be scoped out was finding best practice approach to setting up, structuring and packaging Python projects.<br>
+Packaging, structuring and setting up Python projects is something that I rarely took into consideration before this post partly because I don't often create projects in python, it's mainly scripting for automation but the scenario arose in work where we'll be creating an opensource CLI application and so the first thing that needed to be scoped out was finding best practice approach to set up, structure and package Python projects.<br>
 
 Packaging and structuring Python projects involves three main components in the top level directory:
 - **pyproject.toml**
@@ -30,9 +30,9 @@ Packaging and structuring Python projects involves three main components in the 
 
 # Overview of pyproject.toml, setup.cfg and setup.py
 
-Packaging and installing python projects has been around for 20 years using [distutils/setuptools](https://setuptools.pypa.io/en/latest/userguide/quickstart.html) and recently has been going through a transistional phase so you could achieve the same thing using a few different ways but the purpose of this post is to outline the up-to-date modern approach, time of publishing this. Packaging and installing Python projects evolved from the initial setup.py to setup.cfg and now to the new and shiny pyproject.toml format.
+Packaging and installing python projects has been around for 20 years using [distutils/setuptools](https://setuptools.pypa.io/en/latest/userguide/quickstart.html) and recently has been going through a transistional phase so you could achieve the same thing using a few different ways but the purpose of this post is to outline the up-to-date modern approach (at the time of publishing this post). Packaging and installing Python projects evolved from the initial `setup.py` to `setup.cfg` and now to the new and shiny `pyproject.toml` format.
 
-- **pyproject.toml**, first introduced in 2016 under PEP-518 as a configuration file for specifying build dependencies to be used alongside setuptools. The .toml format was adopted in PEP-621 (2020) for storing project metadata and finally adopted in the more recent PEP-660 for superseding setup.py for editable installs e.g ```pip install --editable . ```. This installs python projects in development mode.
+- **pyproject.toml**, first introduced in 2016 under PEP-518 as a configuration file for specifying build dependencies to be used alongside setuptools. The `.toml` format was adopted in PEP-621 (2020) for storing project metadata and finally adopted in the more recent PEP-660 for superseding setup.py for editable installs e.g ```pip install --editable . ``` - this installs python projects in development mode.
 
 At the time of writing since I noted Python is going through a transistional phase **its recommended that you use all three configuration files in conjunction** for a stable build while the pyproject.toml is still under active development as its still considered experimental.<br>
 
@@ -40,7 +40,7 @@ At the time of writing since I noted Python is going through a transistional pha
 
 # The layout and structure of a Python project
 
-Here is a common structure of a Python repository using the src/ layout:
+Here is a common structure of a Python repository using the `src/` layout:
 
 ```bash
 emmet:python-project/ $ tree                                         
