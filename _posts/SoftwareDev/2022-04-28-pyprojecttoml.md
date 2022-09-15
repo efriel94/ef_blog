@@ -181,7 +181,7 @@ Create and activate a Python venv:
 emmet:python-project/ $ python3 -m venv .myvenv
 emmet:python-project/ $ source .myvenv/bin/activate
 ```
-Install our newly built wheel into the virtual env (.myenv):
+Install our newly built wheel into the virtual env (.myvenv):
 ```bash
 (.myvenv) emmet:python-project/ $ pip install dist/helloworld-0.0.1-py3-none-any.whl
 Processing ./dist/helloworld-0.0.1-py3-none-any.whl
@@ -213,9 +213,7 @@ This is my application being executed from function 2
 
 
 <br><br>
-# References
 
-- https://pybit.es/articles/how-to-package-and-deploy-cli-apps/
-- https://ianhopkinson.org.uk/2022/02/understanding-setup-py-setup-cfg-and-pyproject-toml-in-python/
-- https://python-packaging-tutorial.readthedocs.io/en/latest/setup_py.html
-- 
+[comment]: <> https://pybit.es/articles/how-to-package-and-deploy-cli-apps/
+[comment]: <> https://ianhopkinson.org.uk/2022/02/understanding-setup-py-setup-cfg-and-pyproject-toml-in-python/
+[comment]: <> https://python-packaging-tutorial.readthedocs.io/en/latest/setup_py.html
