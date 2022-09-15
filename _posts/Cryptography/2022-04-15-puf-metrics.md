@@ -28,9 +28,14 @@ To help provide an illustration of the metrics and the mathematical equations th
 <!-- Center image -->
 ![image]({{site.github.url}}/assets/img/crypto/puf_table.png){:style="display:block; margin-left:auto; margin-right:auto"}
 
+**<center>Figure 1 - Illustrating mathematical definitions of HW and HD. [1]</center>**<br><br>
+
+# Background
+
+There are two fundamental mathematical functions by which several important security metrics avail from: Hamming distance and Hamming Weight
 
 ## Hamming Distance
-Arguably the most important metric of evaluating a PUF from a security standpoint is the Hamming distance which is a function computed over two binary strings of equal length that returns the number of bits that differ. There are two types of Hamming distance evaluations in the context of PUFs:
+Hamming distance is a function computed over two binary strings of equal length that returns the number of bits that differ. There are two types of Hamming distance evaluations in the context of PUFs:
 -	Intra-chip HD
 -	Inter-chip HD
 
@@ -42,8 +47,6 @@ $$
 HD(R_i,R_j) = \sum_{b=1}^n (R_{i,b} \oplus R_{j,b})
 $$
 
-<br><br>
-
  <!-- \int \mathcal{D}x(t) \exp(2\pi i S[x]/\hbar) -->
 
 ## Hamming Weight
@@ -54,6 +57,8 @@ HW_b = \frac{1}{m} \sum_{i=1}^n (R_{i,b})
 $$
 
 <br><br>
+
+# PUF Metrics 
 
 ## Uniqueness
 Uniqueness metric evaluates the ability of a PUF to distinguish a device across an array of identical devices. Effectively its measuring the inter-chip HD across a group of $m$ devices. Ideally you want to evaluate that each response is seen to be unique across devices for a given challenge as this improves the main property of the PUF: unclonability, both from a mathematical perspective as well as physical. 
@@ -71,14 +76,31 @@ $$
 
 If different PUF chips produce similar responses to the same challenge, then an adversary may predict PUF responses using modelling attacks.<br><br>
 
+**Pseudocode for evaluating uniqueness:**
+- Pairwise comparison of the fractional hamming distance (average HD) across a population of devices.
+- Evaluating the base response only (true response) 
+
+```python
+average_hd = [] 
+
+for i devices from 1 to m-1
+    store base response i
+    for j in device i+1 to m
+        store base response j 
+        result = sum both mod 2
+        calculate HW of result
+        divide HW by bit length to get average HD and append to list 
+
+# plot histogram of average_hd
+```
+<br> 
+
 ## Minimum Entropy
 When using PUFs in applications, minimum entropy estimation is essential. Entropy is a measure of the unpredictability in PUF responses, and the minimum entropy is an evaluation of the worst-case scenario. In the context of security evaluation, worst-case analysis is preferable to best case. Using the test suite of the National Institute of Standards and Technology (NIST) specification (SP) 800-90B is currently considered the best method for estimating the min-entropy of PUF responses.<br>
 
 Interestingly, there has been ongoing research into problems using NIST SP 800-90B when evaluating it for two-dimensional data structures such as SRAM PUFs:
 
-> First, NIST SP 800-90B is an entropy estimation suite for RNGs that assumes sequential data input. PUFs with an evaluator can intentionally control the ordering of PUF responses by using PUF challenges. Next, the entropy estimation suite of NIST SP 800-90B is known to be unsuitable for two-dimensional memory-based PUFs such as SRAM PUF. The entropy estimation suite is basically designed to operate on one-dimensional data, such as RNGs. There are spatial correlations between responses in PUFs, especially two-dimensional PUFs (e.g., SRAM PUF). Therefore, the approach that concatenates PUF responses obfuscates the spatial correlations and may cause overestimation of PUF entropy.
-
-See paper for more info: **[Entropy Estimation of PUFs with Offset Error](https://eprint.iacr.org/2020/1284.pdf)**
+> First, NIST SP 800-90B is an entropy estimation suite for RNGs that assumes sequential data input. PUFs with an evaluator can intentionally control the ordering of PUF responses by using PUF challenges. Next, the entropy estimation suite of NIST SP 800-90B is known to be unsuitable for two-dimensional memory-based PUFs such as SRAM PUF. The entropy estimation suite is basically designed to operate on one-dimensional data, such as RNGs. There are spatial correlations between responses in PUFs, especially two-dimensional PUFs (e.g., SRAM PUF). Therefore, the approach that concatenates PUF responses obfuscates the spatial correlations and may cause overestimation of PUF entropy. **[2]**
 
 The $n$-bit responses of $m$ devices have an occurrence probability of $p1$ (logic 1) and $p0$ (logic 0) where:
 
@@ -104,7 +126,7 @@ $$
 $$
 
 Where the maximum probability, $pb_{max}=max⁡(p_0,p_1)$ <br><br>
-The ideal case is where $$\widetilde{H}_{min} = 1$$, indicating the probability of a given bit being equal to 0 or 1 is equal $$pb_{max}=0.5$$. 
+The ideal case is where $$\widetilde{H}_{min} = 1$$, indicating the probability of a given bit being equal to 0 or 1 is equal $$pb_{max}=0.5$$. **[1]**
 
 GitHub Link: [NIST SP800-90B suite](https://github.com/usnistgov/SP800-90B_EntropyAssessment)
 
@@ -119,7 +141,7 @@ The algorithm is typically used among other compressors due to the algorithm app
 It’s also possible to evaluate mutual information using the CTW algorithm. See paper: [Comparative Analysis of SRAM Memories Used as PUF Primitives](https://www.intrinsic-id.com/wp-content/uploads/2017/05/SRAM-memories.pdf) <br><br>
 
 ## Correlation
-Correlation in the context of PUFs relates to the likelihood of predicting the bit response of one device from the response of another device. Correlation reduces the effort for the adversary to predict the secret generated by the PUF. Correlation is a well-known issue in the field of IC design where neighbouring locations of the die affect each other but in the context of PUFs it is usually known as spatial artifacts or spatial correlation. Two common causes of spatial correlation in IC design: <br><br>
+Correlation in the context of PUFs relates to the likelihood of predicting the bit response of one device from the response of another device. Correlation reduces the effort for the adversary to predict the secret generated by the PUF **[3]**. Correlation is a well-known issue in the field of IC design where neighbouring locations of the die affect each other but in the context of PUFs it is usually known as spatial artifacts or spatial correlation. Two common causes of spatial correlation in IC design: <br><br>
 **1.	Edge effects:**
 - This means PUF cells at the edge of an array tend to a certain response
 due to a change in surrounding structure and can be alleviated through dummy
@@ -130,8 +152,8 @@ cells around the array that do not contribute to the response.
 
 Spatial correlation may occur in SRAM based PUFs where a coupling occurs between the supply voltage line for the cross-coupled inverters in each SRAM cell where the cell draws current until it reaches its final state hence influencing the supply voltage and thus influencing the response of surrounding cells.<br><br>
 
-## Uniformity
-PUF responses should contain ideally the same number of 1’s and 0’s. Uniformity is used to estimate distribution of 1’s and 0’s. For true bit randomness, uniformity should as close to 0.5. A value of 1 means that all response bits are a logic 1. <br>
+## Uniformity/Bias
+PUF responses should contain ideally the same number of 1’s and 0’s. Uniformity is used to estimate distribution of 1’s and 0’s. For true bit randomness, uniformity will be close to 0.5 but a value 0.5 does not indicate true uniformity as their underlying biases may exist. A value of 1 means that all response bits are a logic 1. <br>
 
 The uniformity of a PUF response of a single device:
 
@@ -147,9 +169,33 @@ $$
 
 An unbiased PUF cell has a uniformity of 0.5 <br><br>
 
+**Pseudocode for evaluating Uniformity/Bias:**
+
+```python
+
+bias = []
+bias_mean []
+
+for i in range from 0 to num_of_devices-1
+    get base response of i
+    get base response of next device i+1
+    sum both mod 2
+    calculate HW
+    append result to bias 
+
+bias_normalized = divide each element in bias by bit length
+bias_mean = get mean value of normalized bias
+
+# Print bias mean value
+# Plot bias_normalised
+```
+<br>
+
 ## Reliability 
 
 An ideal PUF should always output the exact response when given the same challenge. However, in practice this isn’t the case due to the small electrical variations in the silicon which may cause a number of the response bits to flip or change. Other factors affect the reliability such as temperature and power supply. The reliability of the PUF can be used to estimate the number of bits which keep a stable value over time. The stability of the PUF is the number of bits in a response which change value from repeating the same challenge over and over. <br>
+
+The greater the reliability of a PUF response, the less costly the error correction required to correct the flipped bits. **[4]**
 
 Stability can be estimated by evaluating the intra-chip hamming distance. By supplying the PUF with the same challenge over a significant number of measurements $M$ of $n$-bit responses $$R_{m}^{'}$$ where $R_m$ is the baseline reference of the $m$-th device:
 
@@ -179,9 +225,55 @@ $$
 Bias = \frac{1}{m}\sum_{i=0}^{R-1}R_{i,n}
 $$
 
+**Pseudocode for evaluating the Bit Alias:**
+- Inspecting the average bit value for each response bit, averaged across all devices
+- Evaluating the base response only (true response)
+- Ideal value of 0.5
+- Row pair wise comparison across devices
+
+```python
+
+bit_alias_vec = []
+
+for i in range from 0 to bit_length
+    running_sum = 0
+    for j in range from 0 to num_of_devices
+        get base response of device j
+        running_sum += response bit for that device
+    running_sum /= device_num
+    append running_sum to bit_alias_vec
+
+calculate min,max,mean values in bit_alias_vec
+
+# Plot histogram of bit_alias_vec
+
+```
+
 ## References
-- [https://pure.qub.ac.uk/en/publications/a-large-scale-comprehensive-evaluation-of-single-slice-ring-oscil-4](https://pure.qub.ac.uk/en/publications/a-large-scale-comprehensive-evaluation-of-single-slice-ring-oscil-4)
-- [https://www.researchgate.net/publication/327196667_A_Theoretical_Model_to_Link_Uniqueness_and_Min-Entropy_for_PUF_Evaluations](https://www.researchgate.net/publication/327196667_A_Theoretical_Model_to_Link_Uniqueness_and_Min-Entropy_for_PUF_Evaluations)
+
+<a>[1]</a>
+Gu, Chongyan & Liu, Weiqiang & Hanley, Neil & Hesselbarth, Robert & O'Neill, Maire. (2018). A Theoretical Model to Link Uniqueness and Min-Entropy for PUF Evaluations. IEEE Transactions on Computers. PP. 1-1. 10.1109/tc.2018.2866241. 
+
+<a>[2]</a>
+Entropy Estimation of Physically Unclonable
+Functions with Offset Error
+Mitsuru Shiozaki1
+, Yohei Hori2 and Takeshi Fujino3
+
+<a>[3]</a>
+Gu, C., Chang, C. H., Liu, W., Hanley, N., Miskelly, J., & O’Neill, M. (2021). A large-scale comprehensive
+evaluation of single-slice ring oscillator and PicoPUF bit cells on 28-nm Xilinx FPGAs. Journal of Cryptographic
+Engineering, 11(3), 227-238. https://doi.org/10.1007/s13389-020-00244-5
+
+<a>[4]</a>
+Gu, C., Chang, C. H., Liu, W., Hanley, N., Miskelly, J., & O’Neill, M. (2021). A large-scale comprehensive
+evaluation of single-slice ring oscillator and PicoPUF bit cells on 28-nm Xilinx FPGAs. Journal of Cryptographic
+Engineering, page 8, 5.6 Reliability
+
+<br>
+
+## Useful resources
+
 - [https://ebrary.net/29238/computer_science/hardware_security_and_trust_design_and_deployment_of_integrated_circuits_in_a_threatened_environmen](https://ebrary.net/29238/computer_science/hardware_security_and_trust_design_and_deployment_of_integrated_circuits_in_a_threatened_environmen)
 - [https://mediatum.ub.tum.de/doc/1612868/1612868.pdf](https://mediatum.ub.tum.de/doc/1612868/1612868.pdf)
 
