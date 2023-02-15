@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Building an Embedded Linux Distribution on a Beaglebone Black ARM Cortex-A8"
+title: "Building a Lightweight 10MB Embedded Linux OS on a Beaglebone Black ARM Cortex-A8"
 author: "Emmet Friel"
 categories: Unix/Linux
 image: embedded/bb-linux/linux.jpg
@@ -8,7 +8,7 @@ image: embedded/bb-linux/linux.jpg
 
 # Introduction
 
-This tutorial will show you how to build the latest 5.5.5 kernel on the Beaglebone Black with a root filesystem that is less than 10MB which can be easily ported to other boards and IOT devices. The tutorial will consist of using crosstool-NG to build the toolchain, using Make to build the bootloader, kernel and device trees and lastly using Buildroot to compile the root filesystem. Starting off on embedded Linux I'd recommend getting the<a href="https://www.amazon.co.uk/Mastering-Embedded-Linux-Programming-potential/dp/1787283283" target="_blank"> Mastering Embedded Linux Programming book</a> which this tutorial takes pieces of inspiration from and takes you through an in-depth description of the entire project lifecycle. Building an embedded Linux distribution from scratch requires four main elements:
+This tutorial will show you how to build the latest (now as of writing) 5.5.5 kernel on the Beaglebone Black with a root filesystem that is less than 10MB which can be easily ported to other boards and IOT devices. The tutorial will consist of using crosstool-NG to build the toolchain, using Make to build the bootloader, kernel and device trees and lastly using Buildroot to compile the root filesystem. Building an embedded Linux distribution from scratch requires four main elements:
 
 1. Toolchain
 - A set of tools required to build and compile your source code that will be able to run on the target device. The tools include a compiler, a linker and various run-time libraries. I will be using a cross-compilation toolchain that will compile the code on my host machine (Ubuntu 18 VM) that then will run on the target (BeagleBone Black).
