@@ -423,13 +423,22 @@ Device     Boot   Start      End  Sectors  Size Id Type
 
 emmet@homepc:/home/emmet/Documents/buildroot$ sudo dd if=output/images/rootfs.ext4 of=/dev/sdb2
 ```
-<br/><br/><br/>
+<br/><br/>
 
 # Booting up the custom Linux OS
 
 Unmount, eject and place the SD card into the Beaglebone Black. The serial console will now show the operating system booting up a lightweight custom embedded Linux distribution.
 
 ![image]({{site.github.url}}/assets/img/embedded/bb-linux/buildroot.png)
+
+<br>
+
+# Additional Resources
+
+If you are interested in pursuing further work into Embedded Linux Design I suggest the following books as a great reference:
+
+- [Mastering Embedded Linux](https://www.amazon.co.uk/Mastering-Embedded-Linux-Programming-English/dp/1784392537)
+- [Embedded Systems with the Yocto Project](https://www.amazon.co.uk/Embedded-Systems-Prentice-Software-Development/dp/0133443248/ref=sr_1_1?crid=7GI3H5B9OUF2&keywords=yocto&qid=1676497739&s=books&sprefix=yocto%2Cstripbooks%2C84&sr=1-1)
 
 
 
