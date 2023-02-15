@@ -25,11 +25,8 @@ Software Engineer at the [Centre for Secure Information Technologies](https://ww
 
 
 ### Experience
-- Pentesting and Vulnerability assessments.
-- Applied cryptography in FHE, Privacy Preserving ML and PUF.
-- Maintaining, configuring, patching Data Centre router/switch gear, Firewalls etc (Cisco, Mellonox, Fortigate)
-- Full stack web development
-- Developing custom Linux distributions for IOT devices.
-    - Using build systems such as Petalinux (Xilinx based FPGAs), Buildroot and Yocto.
-- Building out red team and blue team training scenarios.
-- Building out and deploying cloud infrastructure using AWS via Terraform, Vagrant, Packer and Ansible.
+- Offensive and Defensive security
+- Applied cryptography
+- Embedded C/Linux development using a range of FPGA boards and microcontrollers
+- AWS Cloud Architecture Design
+
