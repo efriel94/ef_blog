@@ -7,9 +7,12 @@ image: crypto/what-the-hell-does-that-even-mean.jpg
 ---
 <br>
 
+# Prerequesites
+This post assumes the reader has basic knowledge of PUFs, Cryptography and Statistics.
+
 # Introduction
 
-Working as a non academic (engineer) in the academic field of PUF (Physical Unclonable Functions) with no background in Cryptography, attempting to digest heavyweight academic papers was like trying to decipher Egyptian hieroglyphs. Well, not that bad but I was tasked to write code in the past to evaluate the security of a PUF and so to do that I needed to understand the underlying metrics. This post is a PUF-All-in-One Metric Evaluator crash course for Dummies.
+Working as a non academic (Engineer) in the academic field of PUFs (Physical Unclonable Functions) with no background in Cryptography, attempting to digest heavyweight academic papers was like trying to decipher Egyptian hieroglyphs. Well, not that bad. I was tasked to evaluate the security of a PUF and so to do that I needed to understand the underlying metrics. This post is a breakdown of various PUF metrics for Engineers from an applied point of view.
 
 This post outlines a simple breakdown of common PUF evaluation metrics and their associated mathematical and cryptographic concepts. To accurately evaluate the statistical performance and security of a PUF the following metrics are used:
 -	Uniqueness
