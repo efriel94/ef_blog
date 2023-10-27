@@ -9,7 +9,7 @@ image: softwaredev/pyprojecttoml.jpeg
 
 # Introduction 
 
-Packaging, structuring and setting up Python projects is something that I rarely took into consideration before this post partly because I don't often create projects in python, it's mainly scripting for automation but the scenario arose in work where we'll be creating an opensource CLI application and so the first thing that needed to be scoped out was finding best practice approach to set up, structure and package Python projects.<br>
+Packaging, structuring, and setting up Python projects is something I rarely considered. Most of my Python work has been scripting for automation. However, the need for an open-source CLI application at work prompted me to research and implement best practices for setting up, structuring, and packaging Python projects.
 
 Packaging and structuring Python projects involves three main components in the top level directory:
 - **pyproject.toml**
