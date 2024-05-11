@@ -31,3 +31,5 @@ gem 'kramdown-parser-gfm'
 
 #source gem files
 source 'https://rubygems.org'
+
+gem "webrick", "~> 1.8"
