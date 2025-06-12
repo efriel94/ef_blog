@@ -7,7 +7,9 @@ title: "About"
 C:\WINDOWS\system32 > whoami
 ```
 
-Software Engineer at the [Centre for Secure Information Technologies](https://www.qub.ac.uk/ecit/CSIT/) working in the field of Cyber Security. 
+This is a personal wiki where I jot down and record stuff I'm working or anything I find interesting.
 
-This site acts as a personal wiki for work purposes.   
+Look around and take what you find useful.
+
+
 
