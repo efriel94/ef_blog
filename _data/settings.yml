@@ -25,8 +25,8 @@ social:
 pagination:
   paginate: 3
   paginate_path: "/blog/page:num/" 
-  next_page: 'Next'
   previous_page: 'Back'
+  next_page: 'Next'
 
 sharing_button_prompt: 'Feel free to share!'
 
